@@ -3,7 +3,9 @@ import React from "react";
 class NotFound extends React.Component{
     render(){
         return(
-            <div></div>
+            <div>
+                <h1 className="componentHeader">404 - Page not found</h1>
+            </div>
         );
     }
 }
