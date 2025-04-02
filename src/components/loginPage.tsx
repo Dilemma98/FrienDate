@@ -34,6 +34,10 @@ class LoginPage extends React.Component<{}, LoginPageState> {
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.setState({ successMessage: "Inloggad!" });
+
+    setTimeout(() => {
+      this.setState({ successMessage: "" });
+    }, 2000);
   };
 
   render() {
@@ -58,13 +62,19 @@ class LoginPage extends React.Component<{}, LoginPageState> {
             onChange={this.handleChange}
             required
           />
-          <button type="submit">Logga in</button>
+          <button type="submit" className="formActionButtons">
+            Logga in
+          </button>
         </form>
         <h4>Har du inget konto? Skapa ett nedan:</h4>
         <Link to="/registerPage">
           <button className="register-btn">Registrera</button>
         </Link>
-        {this.state.successMessage && <p>{this.state.successMessage}</p>}
+        {this.state.successMessage && (
+          <div className="overlay">
+            <p className="success-message">{this.state.successMessage}</p>
+          </div>
+        )}
       </div>
     );
   }
