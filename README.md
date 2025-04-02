@@ -1,54 +1,36 @@
-# React + TypeScript + Vite
+#FrienDate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Detta är en React-applikation skapad för kursen Klientprogrammering. 
+De vyer du hittar här:
+1.**Homepage** - Här hittar du början på två val, registrering eller logga in, tillsammans med en välkomsttext.
+2.**Affärsplan** - Beskriver kort affärsplanen vi skapade i kursen Affärsmannaskap för IT.
+3.**Affärsidé** - Här förklaras affärsidén lite kort.
+4.**Kontakt** - Här kan man i framtiden skicka in en fråga/ett meddelande till oss.
 
-Currently, two official plugins are available:
+##Såhär startar du applikationen
+1. Klona ner projektet via terminalen:
+   git clone https://github.com/Dilemma98/FrienDate
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Gå till mappen:
+   cd FrienDate
 
-## Expanding the ESLint configuration
+3. Installera beroenden:
+   npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+4. Starta sedan applikationen:
+   npm run dev
+   och gå sedan till länken som dyker upp
+---------------------------------------------------------------------------------------
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+**Vald metod och teknik för källkodshantering**
+Jag har valt att arbeta med Github för versionshantering av projektet. Detta för att det är ett utbrett arbetssätt bland utvecklare. I detta projekt använder jag mig av github för att lagra det i molnet, men också för att bjuda in läraren för bedömning. Under kursens gång kommer repot ligga som privat.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Arbetssätt med källkod**
+Jag kommer att arbeta med branches, där nya funktioner utvecklas i en egen branch, som sedan slås ihop med main (Setup i detta fall) när funktionen fungerar utefter önskemål.
+Vid varje push kommer ett commit-meddelande bifogas där det beskrivs vad som gjorts i denna ändring. Mitt mål är också att pusha min kod ofta, för att se till så eventuellt bortfall av kod inte blir allt för stor. Men även för att förenkla eventuella buggar som pushats upp.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+**JavaScripts-ramverkets påverkan på användningen av kodens struktur**
+Genom att använda sig av ett ramverk som React delas koden upp i mindre och mer återanvändbara komponenter. Detta gör att det blir mycket enklare att underhålla sin applikation.
+I och med React får man tillgång till State, vilket gör att hanteringen av dynamisk data och uppdateringen av UX/UI blir enklare.
+React Router, som jag använder mig av, gör även navigeringen smidigare, då den hanterar navigering mellan olika vyer utan att rendera om sidan. Detta får applikationen mycket snabbare.
+Det finns även en virtuell DOM som ser till att endast rendera de delar av sidan som faktiskt har ändrats, och även detta gör applikationen snabbare.
