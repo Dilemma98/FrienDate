@@ -105,10 +105,11 @@ button:hover {
     box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.25);
 }
 
+
 .inputForms{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 40%;
     margin: 4em auto 0;
     height: 15vh;
     justify-content: space-between;
@@ -157,6 +158,8 @@ footer {
   .contact-form {
     display: flex;
     flex-direction: column;
+    width: 17em;
+    margin: auto;
   }
   
   .form-group {

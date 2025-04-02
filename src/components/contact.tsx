@@ -10,7 +10,6 @@ class Contact extends React.Component {
           vi av oss så snart vi kan.
         </p>
         <form className="contact-form">
-          <h1>Kontakta oss</h1>
           <input type="text" name="name" placeholder="Ditt namn" required />
           <input type="email" name="email" placeholder="Din e-post" required />
           <textarea
