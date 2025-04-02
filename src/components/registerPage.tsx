@@ -34,6 +34,10 @@ class RegisterPage extends React.Component<{}, RegisterPageState> {
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.setState({ successMessage: "Registreringen lyckades!" });
+
+    setTimeout(() => {
+      this.setState({ successMessage: "" });
+    }, 2000);
   };
 
   render() {
@@ -79,14 +83,15 @@ class RegisterPage extends React.Component<{}, RegisterPageState> {
           </button>
         </form>
 
-        {this.state.successMessage && (
-          <p>{this.state.successMessage}</p>
-        )}
-
         <h4>Har du redan ett konto? Logga in nedan:</h4>
         <Link to="/loginPage">
           <button className="login-btn">Logga in</button>
         </Link>
+        {this.state.successMessage && (
+          <div className="overlay">
+            <p className="success-message">{this.state.successMessage}</p>
+          </div>
+        )}
       </div>
     );
   }

@@ -10,6 +10,7 @@ import HomePage from "../src/components/homePage";
 import LoginPage from "../src/components/loginPage";
 import RegisterPage from "../src/components/registerPage";
 import NavBar from "../src/components/nav-bar";
+import "./style.css";
 
 class App extends React.Component{
     render() {
