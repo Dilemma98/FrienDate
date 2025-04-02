@@ -28,6 +28,7 @@ class App extends React.Component{
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </div>
+                <Footer/>
             </Router>
         );
     }
