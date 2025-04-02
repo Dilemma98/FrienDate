@@ -9,6 +9,7 @@ import Header from "../src/components/header";
 import HomePage from "../src/components/homePage";
 import LoginPage from "../src/components/loginPage";
 import RegisterPage from "../src/components/registerPage";
+import NavBar from "../src/components/nav-bar";
 
 class App extends React.Component{
     render() {
@@ -16,19 +17,7 @@ class App extends React.Component{
             <Router>
                 <div>
                     <Header />
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/contact">Kontakt</Link>
-                            </li>
-                            <li>
-                                <Link to="/idea">Affärsidé</Link>
-                            </li>
-                            <li>
-                                <Link to="/plan">Affärsplan</Link>
-                            </li>
-                        </ul>
-                    </nav>
+                    <NavBar />
                     <Routes>
                         <Route path="/" element={<HomePage/>}/>
                         <Route path="/contact" element={<Contact/>}/>
