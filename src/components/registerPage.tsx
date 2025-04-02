@@ -78,6 +78,11 @@ class RegisterPage extends React.Component<{}, RegisterPageState> {
             Registrera
           </button>
         </form>
+
+        {this.state.successMessage && (
+          <p>{this.state.successMessage}</p>
+        )}
+
         <h4>Har du redan ett konto? Logga in nedan:</h4>
         <Link to="/loginPage">
           <button className="login-btn">Logga in</button>
