@@ -4,7 +4,7 @@ class Idea extends React.Component{
     render(){
         return(
             <div>
-                 <h1 className="componentHeader">Affärsidé</h1>
+                <h1 className="componentHeader">Affärsidé</h1>
                 <hr></hr>
                 <p>
                     FrienDate är tänkt att underlätta för människor att skapa och vårda sina relationer genom att identifiera 
