@@ -6,9 +6,9 @@ import Idea from "../src/components/idea";
 import Plan from "../src/components/plan";
 import NotFound from "../src/components/notFound";
 import Header from "../src/components/header";
-import HomePage from "../src/components/homePage";
-import LoginPage from "../src/components/loginPage";
-import RegisterPage from "../src/components/registerPage";
+import HomePage from "../src/components/home";
+import LoginPage from "./components/login";
+import RegisterPage from "../src/components/register";
 import NavBar from "../src/components/nav-bar";
 import "./style.css";
 
@@ -24,8 +24,8 @@ class App extends React.Component{
                         <Route path="/contact" element={<Contact/>}/>
                         <Route path="/idea" element={<Idea/>}/>
                         <Route path="/plan" element={<Plan/>}/>
-                        <Route path="/loginPage" element={<LoginPage/>}/>
-                        <Route path="/registerPage" element={<RegisterPage/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/register" element={<RegisterPage/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </div>
