@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 class HomePage extends React.Component {
   render() {
     return (
-      <div className="text-center mb-20">
+      <div className="text-center mb-20 mt-10">
         <h1 className="text-4xl font-bold text-[#562f39] drop-shadow-md">
           Välkommen till FrienDate!
         </h1>

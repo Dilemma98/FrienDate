@@ -36,14 +36,14 @@ class LoginPage extends React.Component<{}, LoginPageState> {
 
   render() {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen px-6">
-        <h1 className="text-3xl font-bold text-[#562f39] drop-shadow-md mb-4 -mt-25">
+      <div className="text-center w-4/5 max-w-2xl mx-auto my-12 p-6 mt-4 mb-15 rounded-lg shadow-xl">
+        <h1 className="text-3xl font-bold text-[#562f39] drop-shadow-md mb-4">
           Logga in
         </h1>
-        <hr className="w-3/4 border-[#b66c6d] mb-6" />
+        <hr className="w-3/4 border-[#562f39] mb-6 m-auto" />
         
         <form
-          className="flex flex-col items-center w-full max-w-md p-6 bg-[#fcefef] rounded-2xl shadow-xl"
+          className="flex flex-col items-center w-full max-w-md p-6 bg-[#fcefef] rounded-2xl shadow-xl m-auto"
           onSubmit={this.handleSubmit}
         >
           <input
