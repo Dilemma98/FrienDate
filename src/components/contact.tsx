@@ -3,36 +3,38 @@ import React from "react";
 class Contact extends React.Component {
   render() {
     return (
-      <div className="w-4/5 max-w-2xl mx-auto my-12 p-6 bg-white rounded-lg shadow-xl mt-4 mb-15">
-        <h1 className="text-center text-3xl font-bold text-[#562f39] mb-4 drop-shadow-md">Kontakta oss</h1>
-        <hr className="w-3/4 mx-auto my-4 border-[#562f39]"></hr>
-        <p className="text-center text-lg text-gray-700 mb-6">
+      <div className="text-center w-4/5 max-w-2xl mx-auto my-12 p-6 rounded-lg shadow-xl mt-4 mb-15">
+        <h1 className="text-3xl font-bold text-[#562f39] drop-shadow-md mb-4">
+          Kontakta oss
+        </h1>
+        <hr className="w-3/4 mx-auto border-[#562f39]" />
+        <p className="mt-4 text-center text-lg text-[#562f39] mb-6 ">
           Vi är alltid glada att höra från dig! Fyll i formuläret nedan så hör vi av oss så snart vi kan.
         </p>
-        <form className="flex flex-col items-center space-y-4">
+        <form className="flex flex-col items-center w-full max-w-md p-6 bg-[#fcefef] rounded-2xl shadow-xl m-auto">
           <input
             type="text"
             name="name"
             placeholder="Ditt namn"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-[#b66c6d] focus:ring-1 focus:ring-[#b66c6d] outline-none"
+            className="w-full p-3 mb-4 text-[#562f39] border-2 border-[#b66c6d] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b66c6d]"
           />
           <input
             type="email"
             name="email"
             placeholder="Din e-post"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:border-[#b66c6d] focus:ring-1 focus:ring-[#b66c6d] outline-none"
+            className="w-full p-3 mb-4 text-[#562f39] border-2 border-[#b66c6d] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b66c6d]"
           />
           <textarea
             name="message"
             placeholder="Ditt meddelande"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md min-h-[150px] resize-none focus:border-[#b66c6d] focus:ring-1 focus:ring-[#b66c6d] outline-none"
+            className="w-full p-3 mb-6 text-[#562f39] border-2 border-[#b66c6d] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b66c6d] resize-none min-h-[150px]"
           ></textarea>
           <button
             type="submit"
-            className="px-6 py-3 bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] hover:bg-[#8f5060] text-white font-bold rounded-full text-lg transition-transform transform hover:scale-105 shadow-md"
+            className="w-full py-3 text-lg font-bold text-white uppercase rounded-full shadow-md bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] hover:bg-[#8f5060] hover:scale-105 transition-all"
           >
             Skicka
           </button>
