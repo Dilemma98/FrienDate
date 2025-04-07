@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Contact from "../src/components/contact";
 import Footer from "../src/components/footer";
 import Idea from "../src/components/idea";
