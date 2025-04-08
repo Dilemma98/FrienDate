@@ -34,3 +34,8 @@ Genom att använda sig av ett ramverk som React delas koden upp i mindre och mer
 I och med React får man tillgång till State, vilket gör att hanteringen av dynamisk data och uppdateringen av UX/UI blir enklare.
 React Router, som jag använder mig av, gör även navigeringen smidigare, då den hanterar navigering mellan olika vyer utan att rendera om sidan. Detta får applikationen mycket snabbare.
 Det finns även en virtuell DOM som ser till att endast rendera de delar av sidan som faktiskt har ändrats, och även detta gör applikationen snabbare.
+
+
+
+Länk till lanserad app/sida:
+https://friendate-pn5e9.ondigitalocean.app/
