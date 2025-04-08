@@ -35,6 +35,12 @@ class RegisterPage extends React.Component<{}, RegisterPageState> {
     event.preventDefault();
     this.setState({ successMessage: "Registreringen lyckades!" });
 
+    localStorage.setItem("registeredUser", JSON.stringify({
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email
+    }));
+
     setTimeout(() => {
       this.setState({ successMessage: "" });
     }, 2000);

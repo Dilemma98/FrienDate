@@ -27,7 +27,17 @@ class LoginPage extends React.Component<{}, LoginPageState> {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.setState({ successMessage: "Inloggad!" });
+    
+    const storedUser = JSON.parse(localStorage.getItem("registeredUser") || "{}");
+    if(this.state.email == storedUser.email){
+      this.setState({ successMessage: "Inloggad!" });
+    } else {
+      this.setState({ 
+        successMessage: "Oops... Fel e-post eller lösenord!",
+        email: "",
+        password: ""
+      })
+    }
 
     setTimeout(() => {
       this.setState({ successMessage: "" });
