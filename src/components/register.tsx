@@ -107,10 +107,11 @@ const RegisterPage = () => {
       </Link>
 
       {successMessage && (
-        <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-[#ffffff80]">
+        <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-[#ffffff80] flex-col">
           <p className="px-6 py-4 text-xl font-bold text-white bg-[#b66c6d] rounded-lg shadow-lg">
             {successMessage}
           </p>
+          <div className="spinner"></div>
         </div>
       )}
     </div>
