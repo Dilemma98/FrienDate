@@ -10,6 +10,7 @@ import HomePage from "../src/components/home";
 import LoginPage from "./components/login";
 import RegisterPage from "../src/components/register";
 import NavBar from "../src/components/nav-bar";
+import DashboardPage from "../src/components/dashboard";
 import "./style.css";
 
 class App extends React.Component{
@@ -27,6 +28,7 @@ class App extends React.Component{
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/register" element={<RegisterPage/>}/>
                         <Route path="*" element={<NotFound/>}/>
+                        <Route path="/dashboard" element={<DashboardPage/>}/>
                     </Routes>
                 </div>
                 <Footer/>
