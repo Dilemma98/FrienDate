@@ -1,40 +1,39 @@
 # FrienDate
 
-Länk till lanserad app/sida: [https://friendate-pn5e9.ondigitalocean.app/](https://friendate-pn5e9.ondigitalocean.app/)
+**Länk till lanserad app/sida:**  
+[https://friendate-pn5e9.ondigitalocean.app/](https://friendate-pn5e9.ondigitalocean.app/)
 
-Detta är en React-applikation skapad för kursen *Klientprogrammering*.  
+FrienDate är en React-applikation skapad för kursen *Klientprogrammering*.
 
 ## Vyer i applikationen
 
-Här är de vyer som finns tillgängliga i FrienDate:
-
 - **Homepage**  
-  Här hittar du början på två val – registrering eller logga in – tillsammans med en välkomsttext.
+  Här hittar du valen att registrera dig eller logga in, tillsammans med en välkomsttext.
 
 - **Affärsplan**  
-  Beskriver kort affärsplanen vi skapade i kursen Affärsmannaskap för IT.
+  Beskriver kort affärsplanen som skapades i kursen *Affärsmannaskap för IT*.
 
 - **Affärsidé**  
-  Här förklaras affärsidén lite kort.
+  Här presenteras affärsidén i korthet.
 
 - **Kontakt**  
-  Här kan man i framtiden skicka in en fråga eller ett meddelande till oss.
+  I framtiden ska man kunna skicka frågor eller meddelanden via denna vy.
 
 ## Så här startar du applikationen
 
 1. Klona ner projektet via terminalen:  
    `git clone https://github.com/Dilemma98/FrienDate`
 
-2. Gå till mappen:  
+2. Gå till projektmappen:  
    `cd FrienDate`
 
 3. Installera beroenden:  
    `npm install`
 
-4. Starta sedan applikationen:  
+4. Starta applikationen:  
    `npm run dev`
 
-5. Gå sedan till länken som dyker upp i terminalen.
+5. Gå till länken som visas i terminalen (vanligtvis `http://localhost:5173`)
 ---------------------------------------------------------------------------------------
 
 **Vald metod och teknik för källkodshantering**
