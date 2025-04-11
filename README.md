@@ -1,28 +1,40 @@
-Länk till lanserad app/sida:
-https://friendate-pn5e9.ondigitalocean.app/
+# FrienDate
 
-#FrienDate
+Länk till lanserad app/sida: [https://friendate-pn5e9.ondigitalocean.app/](https://friendate-pn5e9.ondigitalocean.app/)
 
-Detta är en React-applikation skapad för kursen Klientprogrammering. 
-De vyer du hittar här:
-1.**Homepage** - Här hittar du början på två val, registrering eller logga in, tillsammans med en välkomsttext.
-2.**Affärsplan** - Beskriver kort affärsplanen vi skapade i kursen Affärsmannaskap för IT.
-3.**Affärsidé** - Här förklaras affärsidén lite kort.
-4.**Kontakt** - Här kan man i framtiden skicka in en fråga/ett meddelande till oss.
+Detta är en React-applikation skapad för kursen *Klientprogrammering*.  
 
-##Såhär startar du applikationen
-1. Klona ner projektet via terminalen:
-   git clone https://github.com/Dilemma98/FrienDate
+## Vyer i applikationen
 
-2. Gå till mappen:
-   cd FrienDate
+Här är de vyer som finns tillgängliga i FrienDate:
 
-3. Installera beroenden:
-   npm install
+- **Homepage**  
+  Här hittar du början på två val – registrering eller logga in – tillsammans med en välkomsttext.
 
-4. Starta sedan applikationen:
-   npm run dev
-   och gå sedan till länken som dyker upp
+- **Affärsplan**  
+  Beskriver kort affärsplanen vi skapade i kursen Affärsmannaskap för IT.
+
+- **Affärsidé**  
+  Här förklaras affärsidén lite kort.
+
+- **Kontakt**  
+  Här kan man i framtiden skicka in en fråga eller ett meddelande till oss.
+
+## Så här startar du applikationen
+
+1. Klona ner projektet via terminalen:  
+   `git clone https://github.com/Dilemma98/FrienDate`
+
+2. Gå till mappen:  
+   `cd FrienDate`
+
+3. Installera beroenden:  
+   `npm install`
+
+4. Starta sedan applikationen:  
+   `npm run dev`
+
+5. Gå sedan till länken som dyker upp i terminalen.
 ---------------------------------------------------------------------------------------
 
 **Vald metod och teknik för källkodshantering**
