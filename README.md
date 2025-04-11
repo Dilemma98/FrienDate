@@ -1,3 +1,6 @@
+Länk till lanserad app/sida:
+https://friendate-pn5e9.ondigitalocean.app/
+
 #FrienDate
 
 Detta är en React-applikation skapad för kursen Klientprogrammering. 
@@ -37,8 +40,3 @@ Det finns även en virtuell DOM som ser till att endast rendera de delar av sida
 
 **Byggsystem**
 Det byggsystem som används är Vite, vilket hanterar både transpilation och utvecklingsserver
-
-
-
-Länk till lanserad app/sida:
-https://friendate-pn5e9.ondigitalocean.app/
