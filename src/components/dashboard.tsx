@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface User {
   firstName: string;
@@ -9,8 +8,7 @@ interface User {
 //Functional component to easier use useNavigate
 const DashboardPage = () => {
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
-
+ 
   /*
       Fetch localStorage information
       and change state for "user"
@@ -23,10 +21,6 @@ const DashboardPage = () => {
     setUser(storedUser);
   }, []);
 
-  // const handleLogout = () => {
-  //   localStorage.setItem("isLoggedIn", "false");
-  //   navigate("/");
-  // };
 
   return (
     <div className="text-center mb-20 mt-10">

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   firstName: string;
@@ -7,7 +8,7 @@ interface User {
 }
 
 const Navbar: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -26,13 +27,10 @@ const Navbar: React.FC = () => {
       }
     };
 
-    // Kör direkt vid laddning
     checkLoginStatus();
 
-    // Lyssna på custom event när användaren loggar in
     window.addEventListener("userLogin", checkLoginStatus);
 
-    // Städa upp lyssnaren
     return () => {
       window.removeEventListener("userLogin", checkLoginStatus);
     };
@@ -69,7 +67,6 @@ const Navbar: React.FC = () => {
                 </Link>
               </li>
             </>
-            
           ) : (
             <>
               {/* If user IS logged in, show this */}
