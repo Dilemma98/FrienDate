@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-//Changed this to a functional component 
+//Changed this to a functional component
 // to be able to use useNavigate
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,16 +21,20 @@ const LoginPage = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
-    const storedUser = JSON.parse(localStorage.getItem("registeredUser") || "{}");
+
+    const storedUser = JSON.parse(
+      localStorage.getItem("registeredUser") || "{}"
+    );
     if (email === storedUser.email && password === storedUser.password) {
-     
       /*IsLoggedIn to be able to make headerLogo
       render the page I want depending och logged
       in or not*/
       localStorage.setItem("isLoggedIn", "true");
       setSuccessMessage("Du loggas in...");
+
       setTimeout(() => {
+        //To talk to nav-bar
+        window.dispatchEvent(new Event("userLogin"));
         setSuccessMessage("");
         navigate("/dashboard");
       }, 2000);
@@ -40,7 +44,7 @@ const LoginPage = () => {
       setPassword("");
       setTimeout(() => {
         setSuccessMessage("");
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -50,7 +54,7 @@ const LoginPage = () => {
         Logga in
       </h1>
       <hr className="w-3/4 border-[#562f39] mb-6 m-auto" />
-      
+
       <form
         className="flex flex-col items-center w-full max-w-md p-6 bg-[#fcefef] rounded-2xl shadow-xl m-auto"
         onSubmit={handleSubmit}
@@ -81,7 +85,9 @@ const LoginPage = () => {
         </button>
       </form>
 
-      <h4 className="mt-6 text-lg text-[#562f39]">Har du inget konto? Skapa ett nedan:</h4>
+      <h4 className="mt-6 text-lg text-[#562f39]">
+        Har du inget konto? Skapa ett nedan:
+      </h4>
       <Link to="/register">
         <button className="mt-4 px-6 py-3 text-lg font-bold text-white uppercase rounded-full shadow-md bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] hover:bg-[#8f5060] hover:scale-105 transition-all">
           Registrera
