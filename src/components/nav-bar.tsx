@@ -45,11 +45,14 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-gradient-to-b from-[#f3ece7] to-[#ffffff] shadow-md py-4 rounded-b-2xl">
-      <div className="flex items-center relative max-w-7xl mx-auto px-4">
+      <div className="flex flex-wrap items-center relative max-w-7xl mx-auto px-4">
         {/* Centrerade länkar */}
         <ul className="flex space-x-8 text-[#562f39] text-lg font-bold mx-auto">
           <li>
-            <Link to="/contact" className="hover:text-[#b66c6d] hover:underline transition-colors duration-300">
+            <Link
+              to="/contact"
+              className="hover:text-[#b66c6d] hover:underline transition-colors duration-300"
+            >
               Kontakt
             </Link>
           </li>
@@ -57,12 +60,18 @@ const Navbar: React.FC = () => {
           {!isLoggedIn ? (
             <>
               <li>
-                <Link to="/idea" className="hover:text-[#b66c6d] hover:underline transition-colors duration-300">
+                <Link
+                  to="/idea"
+                  className="hover:text-[#b66c6d] hover:underline transition-colors duration-300"
+                >
                   Affärsidé
                 </Link>
               </li>
               <li>
-                <Link to="/plan" className="hover:text-[#b66c6d] hover:underline transition-colors duration-300">
+                <Link
+                  to="/plan"
+                  className="hover:text-[#b66c6d] hover:underline transition-colors duration-300"
+                >
                   Affärsplan
                 </Link>
               </li>
@@ -71,12 +80,18 @@ const Navbar: React.FC = () => {
             <>
               {/* If user IS logged in, show this */}
               <li>
-                <Link to="/profile" className="hover:text-[#b66c6d] hover:underline transition-colors duration-300">
+                <Link
+                  to="/profile"
+                  className="hover:text-[#b66c6d] hover:underline transition-colors duration-300"
+                >
                   Profil
                 </Link>
               </li>
               <li>
-                <Link to="/settings" className="hover:text-[#b66c6d] hover:underline transition-colors duration-300">
+                <Link
+                  to="/settings"
+                  className="hover:text-[#b66c6d] hover:underline transition-colors duration-300"
+                >
                   Inställningar
                 </Link>
               </li>
@@ -86,12 +101,14 @@ const Navbar: React.FC = () => {
 
         {/* Logga ut-knappen längst till höger */}
         {isLoggedIn && (
-          <button
-            onClick={handleLogout}
-            className="absolute right-4 px-6 py-2 bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] text-white font-bold rounded-full shadow-md transition-transform transform hover:scale-110 hover:bg-[#8f5060]"
-          >
-            Logga ut
-          </button>
+          <div className="w-full flex justify-center sm:justify-end sm:absolute sm:right-4 mt-4 sm:mt-0">
+            <button
+              onClick={handleLogout}
+              className="px-6 py-2 bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] text-white font-bold rounded-full shadow-md transition-transform transform hover:scale-110"
+            >
+              Logga ut
+            </button>
+          </div>
         )}
       </div>
     </nav>
