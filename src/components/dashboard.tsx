@@ -23,10 +23,10 @@ const DashboardPage = () => {
     setUser(storedUser);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.setItem("isLoggedIn", "false");
-    navigate("/");
-  };
+  // const handleLogout = () => {
+  //   localStorage.setItem("isLoggedIn", "false");
+  //   navigate("/");
+  // };
 
   return (
     <div className="text-center mb-20 mt-10">
@@ -40,12 +40,12 @@ const DashboardPage = () => {
             och dina vänners kalendrar och få tips på 
             aktiviteter ni kan göra tillsammans.
         </p>
-        <button
+        {/* <button
           onClick={handleLogout}
           className="px-6 py-3 text-lg bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] text-white font-bold rounded-full shadow-md transition-transform transform hover:scale-110 hover:bg-[#8f5060]"
         >
           Logga ut
-        </button>
+        </button> */}
       </div>
     </div>
   );
