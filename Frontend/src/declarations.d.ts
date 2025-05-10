@@ -1,4 +1,4 @@
-declare module "*.css";
+declare module '*.css';
 
 export interface UserData {
   sub: string;
