@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import LogoutButton from "./logoutButton";
 
 interface User {
@@ -11,7 +10,7 @@ interface User {
 const Navbar: React.FC = () => {
   const [, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const navigate = useNavigate();
+
 
  useEffect(() => {
   const checkLoginStatus = () => {

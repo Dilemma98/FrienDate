@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GoogleLoginButton from "./googleLoginButton";
-import UserProfile from "./userProfile";
+import UserProfile from "./userDashboard";
 
 export interface UserData {
   name: string;

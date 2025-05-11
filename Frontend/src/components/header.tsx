@@ -6,7 +6,7 @@ const Header = () => {
 
   const handleClick = () => {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    const destination = isLoggedIn ? "/dashboard" : "/";
+    const destination = isLoggedIn ? "/userDashboard" : "/";
     navigate(destination);
   };
 

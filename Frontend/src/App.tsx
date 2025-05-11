@@ -8,11 +8,10 @@ import NotFound from "../src/components/notFound";
 import Header from "../src/components/header";
 import HomePage from "../src/components/home";
 import NavBar from "../src/components/nav-bar";
-import DashboardPage from "../src/components/dashboard";
 import GoogleLoginButton from "../src/components/googleLoginButton";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./style.css";
-
+import UserDashboard from "../src/components/userDashboard";
 
 // UserData interfacet som matchar din komponent
 interface UserData {
@@ -30,7 +29,6 @@ class App extends React.Component<{}, { userData: UserData | null }> {
       userData: null,
     };
   }
-  
 
   setUserData = (userData: UserData | null) => {
     this.setState({ userData });
@@ -38,7 +36,8 @@ class App extends React.Component<{}, { userData: UserData | null }> {
 
   render() {
     return (
-      <GoogleOAuthProvider clientId="655768995238-5m1d0d3arskq73qms4pl96ff6dlde0l9.apps.googleusercontent.com">
+      // Använd clientId från miljövariabeln
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <Router>
           <div>
             <Header />
@@ -48,8 +47,8 @@ class App extends React.Component<{}, { userData: UserData | null }> {
               <Route path="/contact" element={<Contact />} />
               <Route path="/idea" element={<Idea />} />
               <Route path="/plan" element={<Plan />} />
-              <Route path="/googleLogin" element={<GoogleLoginButton setUserData={this.setUserData} />}/>
-              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/googleLogin" element={<GoogleLoginButton setUserData={this.setUserData} />} />
+              <Route path="/userDashboard" element={<UserDashboard userData={this.state.userData} />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
