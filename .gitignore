@@ -22,6 +22,7 @@ node_modules
 *.sln
 *.sw?
 
-# Ignorera obj- och bin-mappar
+# Ignore obj- and bin-folder
 obj/
 bin/
+>>>>>>> 96910ee16d5c4294e9561da8f9f6078307b275f8

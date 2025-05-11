@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+
+.spinner {
+    border: 4px solid #d1a9a9;
+    border-top: 6px solid #9e5a5b; 
+    border-radius: 50%; 
+    width: 2em; 
+    height: 2em; 
+    animation: spin 2s linear infinite;
+    margin-top: 1em;
+}
+
+/* Animation to make circle spin */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
