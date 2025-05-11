@@ -23,10 +23,8 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       try {
-        // Använd access_token från response
         const token = response.access_token;
 
-        // Hämta användardata
         const res = await fetch(
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
@@ -46,7 +44,6 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         window.dispatchEvent(new Event("userLogin"));
         setIsLoggedIn(true);
 
-        // Hämta kalenderdata
         const calendarRes = await fetch(
           "https://www.googleapis.com/calendar/v3/calendars/primary/events",
           {
@@ -70,7 +67,6 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
 
         console.log("Mappade händelser:", events);
 
-        // Sätt händelser i state
         setGoogleEvents(events);
         console.log("State för googleEvents:", events);
       } catch (err) {
@@ -81,7 +77,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     scope:
       "https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
   });
-console.log("Händelser som renderas i UI:", googleEvents);
+
   return (
     <div className="p-6">
       {!isLoggedIn ? (
@@ -97,29 +93,29 @@ console.log("Händelser som renderas i UI:", googleEvents);
           <h1 className="text-2xl font-bold">Välkommen!</h1>
           <div className="mt-6">
             <h2 className="text-xl font-semibold">Din Kalender:</h2>
-           {googleEvents.length > 0 ? (
-  <div className="mt-4">
-    {googleEvents.map((event, index) => (
-      <div key={index} className="mb-4 border-b pb-2">
-        <h3 className="font-medium text-lg">{event.summary}</h3>
-        <p>
-          Start:{" "}
-          {event.start
-            ? new Date(event.start).toLocaleString()
-            : "Okänt startdatum"}
-        </p>
-        <p>
-          Slut:{" "}
-          {event.end
-            ? new Date(event.end).toLocaleString()
-            : "Okänt slutdatum"}
-        </p>
-      </div>
-    ))}
-  </div>
-) : (
-  <p>Inga händelser tillgängliga för visning.</p>
-)}
+            {googleEvents.length > 0 ? (
+              <div className="mt-4">
+                {googleEvents.map((event, index) => (
+                  <div key={index} className="mb-4 border-b pb-2">
+                    <h3 className="font-medium text-lg">{event.summary}</h3>
+                    <p>
+                      Start:{" "}
+                      {event.start
+                        ? new Date(event.start).toLocaleString()
+                        : "Okänt startdatum"}
+                    </p>
+                    <p>
+                      Slut:{" "}
+                      {event.end
+                        ? new Date(event.end).toLocaleString()
+                        : "Okänt slutdatum"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Inga händelser tillgängliga för visning.</p>
+            )}
           </div>
         </div>
       )}
