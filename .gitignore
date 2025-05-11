@@ -15,8 +15,13 @@ node_modules
 !.vscode/extensions.json
 .idea
 .DS_Store
+.env
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Ignore obj- and bin-folder
+obj/
+bin/
