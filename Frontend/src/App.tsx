@@ -48,7 +48,7 @@ class App extends React.Component<{}, { userData: UserData | null }> {
               <Route path="/idea" element={<Idea />} />
               <Route path="/plan" element={<Plan />} />
               <Route path="/googleLogin" element={<GoogleLoginButton setUserData={this.setUserData} />} />
-              <Route path="/userDashboard" element={<UserDashboard />} />
+              <Route path="/userDashboard" element={<UserDashboard userData={this.state.userData} />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
