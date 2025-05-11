@@ -15,8 +15,19 @@ node_modules
 !.vscode/extensions.json
 .idea
 .DS_Store
+<<<<<<< HEAD
+=======
+.env
+>>>>>>> Deploy
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
+=======
+
+# Ignorera obj- och bin-mappar
+obj/
+bin/
+>>>>>>> Deploy
