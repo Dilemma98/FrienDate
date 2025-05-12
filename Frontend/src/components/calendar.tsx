@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import "react-big-calendar/lib/css/react-big-calendar.css";
- import {sv} from "date-fns/locale/sv";
+import { sv } from "date-fns/locale/sv";
 const locales = {
-    sv: sv,
+  sv: sv,
 };
 
 const localizer = dateFnsLocalizer({
@@ -25,7 +25,7 @@ export default function Calendar() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
 
   useEffect(() => {
-      console.log("🔍 useEffect körs!");
+    console.log("🔍 useEffect körs!");
     const getEvents = async () => {
       const fetchedEvents = await fetchCalendarEvents();
       setEvents(fetchedEvents);
@@ -40,29 +40,31 @@ export default function Calendar() {
 // 🔹 Hämta events från Google Calendar API
 async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
   console.log("🔍 Hämtar events...");
-    const token = localStorage.getItem("accessToken");
-if (!token) {
-  console.warn("⚠️ Inget accessToken hittades i localStorage");
-  return [];
-}
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    console.warn("⚠️ Inget accessToken hittades i localStorage");
+    return [];
+  }
 
   try {
-    const calendarRes = await fetch(
-      "https://www.googleapis.com/calendar/v3/calendars/primary/events",
+    const response = await fetch("http://localhost:5231/api/google/fetchCalendar",
       {
+        // method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`, // skicka token i headern
         },
-      }
-    );
+      });
 
-    if (!calendarRes.ok) {
+    if (!response.ok) {
+       console.error("Felstatus:", response.status, await response.text());
       throw new Error("Kunde inte hämta kalenderdata");
     }
 
-    const calendarData = await calendarRes.json();
-
-    return calendarData.items.map((event: any) => ({
+    const calendarData = await response.json();
+    const items = typeof calendarData.items === "string" ? JSON.parse(calendarData.items) : calendarData.items;
+    
+    console.log("📅 Kalenderdata:", JSON.stringify(items, null, 2));
+    return items.map((event: any) => ({
       title: event.summary || "Ingen titel",
       start: new Date(event.start?.dateTime || event.start?.date),
       end: new Date(event.end?.dateTime || event.end?.date),

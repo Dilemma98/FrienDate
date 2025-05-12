@@ -57,6 +57,48 @@ namespace _.Controllers
             }
         }
 
+        [HttpGet("fetchCalendar")]
+        public async Task<IActionResult> FetchCalendar()
+        {
+            var authHeader = Request.Headers["Authorization"].ToString();
+
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                return BadRequest("Access-token saknas eller är felaktigt formaterad");
+            }
+
+            var accessToken = authHeader.Replace("Bearer ", "");
+
+            try
+            {
+                var timeMin = "2025-01-01T00:00:00Z";
+                var url = $"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin={timeMin}&singleEvents=true&orderBy=startTime";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+                var response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Fel vid hämtning av kalender: {response.StatusCode}");
+                    return StatusCode((int)response.StatusCode, "Fel vid hämtning av kalender");
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Respons från Google Calendar API: {responseContent}");
+
+                return Ok(responseContent); // JSON-sträng
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fel vid hämtning av kalender: {ex.Message}");
+                return StatusCode(500, "Serverfel vid hämtning av kalender");
+            }
+        }
+
+
+
         // Funktion för att validera Google access-token
         private async Task<GoogleUserInfo> ValidateGoogleAccessToken(string accessToken)
         {

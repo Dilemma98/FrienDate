@@ -1,5 +1,5 @@
 import React from "react";
-// import {Calendar} from "./calendar"; // Om du vill använda Calendar-komponenten senare
+import Calendar from "./calendar"; // Om du vill använda Calendar-komponenten senare
 
 export interface UserData {
   name: string;
@@ -34,7 +34,7 @@ const UserDashboard: React.FC<UserProps> = ({ userData }) => {
         </div>
         <div className="mt-4">
           {/* Lägg till här för att visa en kalender eller annan komponent */}
-          {/* <Calendar /> */}
+          <Calendar />
         </div>
       </div>
     </div>
