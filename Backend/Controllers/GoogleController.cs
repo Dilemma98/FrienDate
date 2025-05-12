@@ -1,7 +1,7 @@
-using Google.Apis.Auth.OAuth2.Requests;
 using Microsoft.AspNetCore.Mvc;
-using Google.Apis.Auth;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace _.Controllers
 {
@@ -9,32 +9,110 @@ namespace _.Controllers
     [ApiController]
     public class GoogleController : ControllerBase
     {
-        // HttpPost Login  
-        private readonly string _client = "655768995238-5m1d0d3arskq73qms4pl96ff6dlde0l9.apps.googleusercontent.com";
+        private readonly HttpClient _httpClient;
 
+        public GoogleController(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] TokenRequest request)
+        public async Task<IActionResult> Login([FromBody] GoogleUserInfo user)
         {
-          var token = request.Token;
-          try
-          {
-              var payload = await GoogleJsonWebSignature.ValidateAsync(token);
-              
-               var userId = payload.Subject;
-                var email = payload.Email;
+            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Token))
+            {
+                return BadRequest("Email eller Token saknas");
+            }
 
-              return Ok(payload);
-          }
-          catch (InvalidJwtException ex)
-          {
-              return BadRequest(ex.Message);
-          }
-        } 
+            try
+            {
+                // Validera access-token med Google API
+                var validatedUser = await ValidateGoogleAccessToken(user.Token);
+                if (validatedUser == null)
+                {
+                    return Unauthorized("Ogiltig Google access-token");
+                }
+
+                // Om tokenet är giltigt, kan du spara användaren i databasen eller utföra annan logik
+                Console.WriteLine($"✅ Inloggad användare: {validatedUser.Name} ({validatedUser.Email})");
+
+                // Här returnerar vi hela användarobjektet till frontend
+                return Ok(new
+                {
+                    Message = "Inloggning lyckades",
+                    user = new
+                    {
+                        validatedUser.Name,
+                        validatedUser.Email,
+                        validatedUser.Picture,
+                        validatedUser.GivenName,
+                        validatedUser.FamilyName
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fel vid tokenvalidering: {ex.Message}");
+                return StatusCode(500, "Serverfel vid validering av token");
+            }
+        }
+
+        // Funktion för att validera Google access-token
+        private async Task<GoogleUserInfo> ValidateGoogleAccessToken(string accessToken)
+        {
+            try
+            {
+                var url = "https://www.googleapis.com/oauth2/v3/userinfo";
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+                var response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Fel vid validering av access-token: {response.StatusCode}");
+                    return null;
+                }
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Respons från Google API: {responseContent}");
+
+                return JsonConvert.DeserializeObject<GoogleUserInfo>(responseContent);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fel vid validering av access-token: {ex.Message}");
+                return null;
+            }
+        }
+    }
+    public class GoogleUserInfo
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("picture")]
+        public string Picture { get; set; }
+
+        [JsonProperty("given_name")]
+        public string GivenName { get; set; }
+
+        [JsonProperty("family_name")]
+        public string FamilyName { get; set; }
+
+        public string Token { get; set; } // Från frontend
+
     }
 
-    public class TokenRequest
+    // Klass för att deserialisera svaret från Google's tokeninfo-API
+    public class GoogleTokenInfo
     {
-        public string Token { get; set; }
+        public string Sub { get; set; } // Google user ID
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Picture { get; set; }
     }
 }

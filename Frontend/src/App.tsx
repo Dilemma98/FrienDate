@@ -12,31 +12,29 @@ import GoogleLoginButton from "../src/components/googleLoginButton";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./style.css";
 import UserDashboard from "../src/components/userDashboard";
+import type { UserData } from "./declarations/declarations.d";
 
-// UserData interfacet som matchar din komponent
-interface UserData {
-  name: string;
-  email: string;
-  picture: string;
-  given_name: string;
-  family_name: string;
+// 🧩 2. App state
+interface AppState {
+  userData: UserData | null;
 }
 
-class App extends React.Component<{}, { userData: UserData | null }> {
+class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      userData: null,
+      userData: localStorage.getItem("frienDateUser")
+        ? JSON.parse(localStorage.getItem("frienDateUser")!)
+        : null,
     };
   }
 
-  setUserData = (userData: UserData | null) => {
-    this.setState({ userData });
+  setUserData = (data: UserData) => {
+    this.setState({ userData: data });
   };
 
   render() {
     return (
-      // Använd clientId från miljövariabeln
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <Router>
           <div>
@@ -47,8 +45,14 @@ class App extends React.Component<{}, { userData: UserData | null }> {
               <Route path="/contact" element={<Contact />} />
               <Route path="/idea" element={<Idea />} />
               <Route path="/plan" element={<Plan />} />
-              <Route path="/googleLogin" element={<GoogleLoginButton setUserData={this.setUserData} />} />
-              <Route path="/userDashboard" element={<UserDashboard userData={this.state.userData} />} />
+              <Route
+                path="/googleLogin"
+                element={<GoogleLoginButton setUserData={this.setUserData} />}
+              />
+              <Route
+                path="/userDashboard"
+                element={<UserDashboard userData={this.state.userData} />}
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

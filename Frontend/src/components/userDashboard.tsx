@@ -1,12 +1,12 @@
 import React from "react";
-// import {Calendar} from "./calendar"; // Importera Calendar komponenten
+// import {Calendar} from "./calendar"; // Om du vill använda Calendar-komponenten senare
 
 export interface UserData {
   name: string;
   email: string;
   picture: string;
-  given_name: string;
-  family_name: string;
+  givenName: string;
+  familyName: string;
 }
 
 export interface UserProps {
@@ -17,13 +17,14 @@ const UserDashboard: React.FC<UserProps> = ({ userData }) => {
   if (!userData) {
     return <div>Du måste logga in för att se din dashboard.</div>;
   }
+  console.log("User data in dashboard:", userData.givenName);
 
   return (
     <div className="text-center mb-20 mt-10">
       <div className="max-w-4xl mx-auto p-8">
         <div className="flex items-center justify-center gap-4">
           <h1 className="text-3xl font-bold text-[#562f39] drop-shadow-md mb-0">
-            Välkommen {userData.given_name}!
+            Välkommen {userData.givenName}!
           </h1>
           <img
             src={userData.picture}
@@ -32,6 +33,7 @@ const UserDashboard: React.FC<UserProps> = ({ userData }) => {
           />
         </div>
         <div className="mt-4">
+          {/* Lägg till här för att visa en kalender eller annan komponent */}
           {/* <Calendar /> */}
         </div>
       </div>
