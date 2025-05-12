@@ -1,22 +1,52 @@
 @import "tailwindcss";
 
 
-.spinner {
-    border: 4px solid #d1a9a9;
-    border-top: 6px solid #9e5a5b; 
-    border-radius: 50%; 
-    width: 2em; 
-    height: 2em; 
-    animation: spin 2s linear infinite;
-    margin-top: 1em;
+.rbc-day-bg {
+  border: 1px solid #eee;
+  transition: background-color 0.2s ease-in-out;
 }
 
-/* Animation to make circle spin */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+.rbc-day-bg:hover {
+  background-color: #f7f7f7;
 }
+
+.rbc-today {
+  background-color: #ffe7ee !important;
+}
+
+.rbc-event {
+  position: relative;
+}
+
+.rbc-event-time {
+  display: none; /* Dölj tid som standard */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.416);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.rbc-event:hover .rbc-event-time {
+  display: block; /* Visa tid vid hovring */
+}
+
+/* styles.css */
+.event-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px; /* Rundade hörn */
+  padding: 0.1em;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-item:hover {
+  transform: scale(1.10);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
