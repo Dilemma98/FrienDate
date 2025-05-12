@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Lägg till HttpClient till DI-container
+builder.Services.AddHttpClient();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
