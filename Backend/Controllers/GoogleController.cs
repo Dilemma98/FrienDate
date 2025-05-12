@@ -71,7 +71,7 @@ namespace _.Controllers
 
             try
             {
-                var timeMin = "2025-01-01T00:00:00Z";
+                var timeMin = "2023-01-01T00:00:00Z";
                 var url = $"https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin={timeMin}&singleEvents=true&orderBy=startTime";
 
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -86,8 +86,6 @@ namespace _.Controllers
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Respons från Google Calendar API: {responseContent}");
-
                 return Ok(responseContent); // JSON-sträng
             }
             catch (Exception ex)
