@@ -1,7 +1,7 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { UserData } from "./userDashboard";
+import { UserData } from "../declarations/declarations.d";
 
 interface GoogleLoginButtonProps {
   setUserData: (data: UserData) => void;
@@ -29,6 +29,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) =>
           headers: {
             "Content-Type": "application/json",
           },
+           credentials: 'include',
           body: JSON.stringify({
             Email: userInfo.email,
             Name: userInfo.name,
@@ -58,7 +59,6 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) =>
 
         setUserData(backendUser.user);
 
-        // 🟢 Trigger event so Navbar can react immediately
         window.dispatchEvent(new Event("userLogin"));
 
         navigate("/userDashboard");

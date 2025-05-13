@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
         <>
           <li>
             <Link
-              to="/profile"
+              to="/userProfile"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
               Profil
