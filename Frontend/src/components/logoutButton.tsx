@@ -10,7 +10,7 @@ const LogoutButton: React.FC = () => {
   return (
     <button
       onClick={handleLogout}
-      className="px-4 py-1 text-lg bg-[#562f39] text-white font-bold rounded-full shadow-md transition-transform transform hover:scale-110 hover:bg-[#bd7d8d] flex items-center justify-center gap-3">
+      className="px-4 py-1 text-lg bg-[#562f39] text-white font-bold rounded-full shadow-md transition-transform transform hover:cursor-pointer hover:scale-110 hover:bg-[#bd7d8d] flex items-center justify-center gap-3">
       Logga ut
     </button>
   );

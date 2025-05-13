@@ -3,7 +3,7 @@ import React from "react";
 class Contact extends React.Component {
   render() {
     return (
-      <div className="text-center w-4/5 max-w-2xl mx-auto my-12 p-6 rounded-lg shadow-xl mt-4 mb-15">
+      <div className="text-center w-4/5 max-w-2xl mx-auto my-12 p-6 bg-white rounded-lg shadow-xl mt-4 mb-15">
         <h1 className="text-3xl font-bold text-[#562f39] drop-shadow-md mb-4">
           Kontakta oss
         </h1>
