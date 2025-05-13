@@ -57,7 +57,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-  <div className="min-h-screen flex items-center justify-center px-4">
+  <div className="mt-10 flex items-center justify-center px-4">
     {!isLoggedIn || !userData ? (
       <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-8">
         <h1 className="text-3xl font-semibold text-[#333333] mb-4 text-center">

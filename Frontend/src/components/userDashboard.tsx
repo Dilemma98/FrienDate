@@ -1,13 +1,6 @@
 import React from "react";
 import Calendar from "./calendar"; // Om du vill använda Calendar-komponenten senare
-
-export interface UserData {
-  name: string;
-  email: string;
-  picture: string;
-  givenName: string;
-  familyName: string;
-}
+import { UserData } from "../declarations/declarations.d"; // Importera UserData från declarations
 
 export interface UserProps {
   userData: UserData | null; // Tillåt att userData kan vara null

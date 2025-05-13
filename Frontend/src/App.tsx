@@ -10,10 +10,10 @@ import HomePage from "../src/components/home";
 import NavBar from "../src/components/nav-bar";
 import GoogleLoginButton from "../src/components/googleLoginButton";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import "./style.css";
 import UserDashboard from "../src/components/userDashboard";
 import type { UserData } from "./declarations/declarations.d";
-
+import UserProfile from "./components/userProfile";
+import "./style.css";
 // 🧩 2. App state
 interface AppState {
   userData: UserData | null;
@@ -54,6 +54,9 @@ class App extends React.Component<{}, AppState> {
                 element={<UserDashboard userData={this.state.userData} />}
               />
               <Route path="*" element={<NotFound />} />
+              <Route
+                path="/userProfile"
+                element={<UserProfile userData={this.state.userData} />} />
             </Routes>
           </div>
           <Footer />
