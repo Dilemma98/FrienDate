@@ -20,8 +20,11 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) =>
         });
 
         const userInfo = await res.json();
+        //For development purposes
+        // const backendRes = await fetch("http://localhost:5231/api/google/login", {
 
-        const backendRes = await fetch("http://localhost:5231/api/google/login", {
+        //When deployed
+        const backendRes = await fetch("http://152.42.135.43:5231/api/google/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
