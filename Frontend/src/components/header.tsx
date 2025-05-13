@@ -23,16 +23,16 @@ const Header = () => {
   }, [navigate]);
 
   return (
-    <header className="bg-gradient-to-b from-[#b97989] to-[#f3ece7] p-7 text-center shadow-xl">
-      <h1 className="text-7xl font-bold tracking-wide text-[#562f39] drop-shadow-lg font-[Studydesk]">
-        <button
-          onClick={handleClick}
-          className="transition-all duration-300 hover:text-[#8f5060] hover:scale-105 inline-block"
-        >
-          FrienDate
-        </button>
-      </h1>
-    </header>
+  <header className="bg-gradient-to-b from-[#f3e7eb] to-[#fdfbfa] shadow-md">
+  <div className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-center">
+    <button
+      onClick={handleClick}
+      className="text-5xl font-bold text-[#562f39] drop-shadow-sm transition duration-300 hover:text-[#bd7d8d] font-[Studydesk]"
+    >
+      FrienDate
+    </button>
+  </div>
+</header>
   );
 };
 

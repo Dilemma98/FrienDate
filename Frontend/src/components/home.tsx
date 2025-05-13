@@ -57,26 +57,24 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className="text-center mb-20 mt-10">
-      {!isLoggedIn || !userData ? (
-        <div>
-          <h1 className="text-4xl font-bold text-[#562f39] drop-shadow-md">
-            Välkommen till FrienDate!
-          </h1>
-          <hr className="w-3/4 mx-auto my-4 border-[#562f39]" />
-          <p className="text-xl text-[#562f39] max-w-2xl mx-auto leading-relaxed">
-            Vi är glada att ha dig här! Hitta nya sätt att umgås och få hjälp
-            att planera din nästa träff med vänner eller familj.
-          </p>
-          <div className="flex flex-col items-center gap-4 mt-8">
-            <GoogleLoginButton setUserData={setUserData} />
-          </div>
+  <div className="min-h-screen flex items-center justify-center px-4">
+    {!isLoggedIn || !userData ? (
+      <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-8">
+        <h1 className="text-3xl font-semibold text-[#333333] mb-4 text-center">
+          Välkommen till FrienDate
+        </h1>
+        <p className="text-gray-700 text-center mb-6 leading-relaxed">
+          Synka dina kalendrar och hitta nya sätt att umgås – enkelt, smart och kul.
+        </p>
+        <div className="flex justify-center">
+          <GoogleLoginButton setUserData={setUserData} />
         </div>
-      ) : (
-        <UserDashboard userData={userData} />
-      )}
-    </div>
-  );
+      </div>
+    ) : (
+      <UserDashboard userData={userData} />
+    )}
+  </div>
+);
 };
 
 export default HomePage;
