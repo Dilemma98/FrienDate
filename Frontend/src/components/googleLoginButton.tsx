@@ -48,10 +48,15 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) =>
         }
 
         const backendUser = await backendRes.json();
+
         localStorage.setItem("frienDateUser", JSON.stringify(backendUser.user));
-        setUserData(backendUser.user);
         localStorage.setItem("accessToken", response.access_token);
         localStorage.setItem("isLoggedIn", "true");
+
+        setUserData(backendUser.user);
+
+        // 🟢 Trigger event so Navbar can react immediately
+        window.dispatchEvent(new Event("userLogin"));
 
         navigate("/userDashboard");
       } catch (err) {
@@ -64,15 +69,15 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) =>
   });
 
   return (
-    <div className="p-6">
-      <button
-        onClick={() => login()}
-        className="px-6 py-3 text-lg bg-gradient-to-b from-[#bd7d8d] to-[#a05e6e] text-white font-bold rounded-full shadow-md transition-transform transform hover:scale-110 hover:bg-[#8f5060] flex items-center justify-center gap-3"
-      >
-        Logga in med Google
-        <FcGoogle className="text-2xl bg-white rounded-full" />
-      </button>
-    </div>
+<div className="p-6">
+  <button
+    onClick={() => login()}
+    className="w-full max-w-sm px-6 py-3 text-base font-medium text-white bg-[#562f39] border border-gray-300 rounded-lg shadow-sm hover:bg-[#bd7d8d] hover:cursor-pointer hover:shadow-lg hover:border-gray-400 transition flex items-center justify-center gap-3"
+  >
+    <FcGoogle className="text-2xl" />
+    Logga in med Google
+  </button>
+</div>
   );
 };
 

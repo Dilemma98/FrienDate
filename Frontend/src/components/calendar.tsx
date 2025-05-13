@@ -4,7 +4,46 @@ import { format, parse, startOfWeek, getDay } from "date-fns";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { sv } from "date-fns/locale/sv";
 import "../style.css";
+import { ToolbarProps } from "react-big-calendar";
 
+const CustomToolbar: React.FC<ToolbarProps<CalendarEvent, object>> = ({
+  label,
+  onNavigate,
+}) => {
+  return (
+    <div style={{ textAlign: "center", marginBottom: "1rem", marginTop: "1rem" }}>
+      <div
+        style={{
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          marginBottom: "0.5rem",
+        }}
+      >
+        {label}
+      </div>
+      <div className="flex justify-center gap-6">
+        <button
+          onClick={() => onNavigate("PREV")}
+          className="px-4 py-1 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200"
+        >
+          ⟵ Föregående
+        </button>
+        <button
+          onClick={() => onNavigate("TODAY")}
+          className="px-4 py-1 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200"
+        >
+          Idag
+        </button>
+        <button
+          onClick={() => onNavigate("NEXT")}
+          className="px-4 py-1 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-200"
+        >
+          Nästa ⟶
+        </button>
+      </div>
+    </div>
+  );
+};
 const locales = {
   sv: sv,
 };
@@ -25,23 +64,22 @@ interface CalendarEvent {
 }
 
 const colorMap: Record<string, string> = {
-  1: "#FF6F61",   // Korallrosa
-  2: "#6B5B95",   // Lila-lavendel
-  3: "#88B04B60",   // Olivgrön
-  4: "#F7CAC9",   // Ljusrosa
-  5: "#92A8D180",   // Ljusblå
-  6: "#F2B5D4",   // Ljuslavendel
-  7: "#F9AFAE",   // Ljuskorall
-  8: "#C9B9D2",   // Grå-lila
-  9: "#E0E0E2",   // Mycket ljusgrå
-  10: "#4E8E8E",  // Mörk turkos
-  11: "#F4E1D2",  // Ljusbeige
-  12: "#F28D35",  // Ljusorange
-  13: "#7C9D97",  // Mörkblågrön
-  14: "#B7C3C1",  // Ljus grå-grön
-  15: "#A5D8D9",  // Mjuk turkosblå
-  16: "#FFB6C1",  // Ljusrosa
-
+  1: "#FF6F61", // Korallrosa
+  2: "#6B5B95", // Lila-lavendel
+  3: "#88B04B60", // Olivgrön
+  4: "#F7CAC9", // Ljusrosa
+  5: "#92A8D180", // Ljusblå
+  6: "#F2B5D4", // Ljuslavendel
+  7: "#F9AFAE", // Ljuskorall
+  8: "#C9B9D2", // Grå-lila
+  9: "#E0E0E2", // Mycket ljusgrå
+  10: "#4E8E8E", // Mörk turkos
+  11: "#F4E1D2", // Ljusbeige
+  12: "#F28D35", // Ljusorange
+  13: "#7C9D97", // Mörkblågrön
+  14: "#B7C3C1", // Ljus grå-grön
+  15: "#A5D8D9", // Mjuk turkosblå
+  16: "#FFB6C1", // Ljusrosa
 };
 
 export default function Calendar() {
@@ -131,10 +169,11 @@ function renderCalendarUI(events: CalendarEvent[]) {
             border: "none",
             textAlign: "center",
             position: "relative",
+            fontSize: "0.8em",
           },
         })}
-        toolbar={true}
         components={{
+          toolbar: CustomToolbar,
           event: ({ event }) => (
             <div>
               <span>{event.title}</span>
