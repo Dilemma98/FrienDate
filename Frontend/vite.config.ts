@@ -9,6 +9,7 @@ export default defineConfig({
     tailwindcss()
   ],
   server: {
-    port: 5175
+    port: 5175,
+    allowedHosts: ['8acd-2001-2044-1517-1000-cd63-a279-cc7d-7b0d.ngrok-free.app']
   }
 })

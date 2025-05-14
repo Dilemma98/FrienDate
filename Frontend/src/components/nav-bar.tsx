@@ -86,10 +86,10 @@ const Navbar: React.FC = () => {
           </li>
           <li>
             <Link
-              to="/settings"
+              to="/activitySuggestions"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
-              Inställningar
+              Aktivitetsförslag
             </Link>
           </li>
           <li>
