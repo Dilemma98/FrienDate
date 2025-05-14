@@ -3,7 +3,6 @@ import { UserData } from "../declarations/declarations.d"; // Import UserData ty
 
 // UserProfile component accepts userData prop which can be either a UserData object or null
 const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
-
   // useEffect hook to fetch user information from the backend after component mounts
   useEffect(() => {
     // Async function to fetch user info from the backend API
@@ -15,19 +14,21 @@ const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
 
       try {
         // Make a GET request to fetch user info from the backend API
-        const res = await fetch("http://localhost:5231/api/google/fetchUserInfo", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // Send the access token in the Authorization header
-          },
-        });
+        const res = await fetch(
+          "http://localhost:5231/api/google/fetchUserInfo",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // Send the access token in the Authorization header
+            },
+          }
+        );
 
         // If the response isn't ok (status code is not 200), log an error
         if (!res.ok) {
           console.error("Fel vid hämtning av användarinfo från backend");
           return;
         }
-
       } catch (error) {
         // If there is an error during the fetch operation, log the error
         console.error("Fel vid hämtning av användarinformation:", error);
@@ -36,7 +37,7 @@ const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
 
     // Call the fetchUserInfo function when the component mounts
     fetchUserInfo();
-     // Empty dependency array means this effect runs only once (on component mount)
+    // Empty dependency array means this effect runs only once (on component mount)
   }, []);
 
   if (!userData) {
@@ -54,9 +55,19 @@ const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
           alt="Profilbild"
           className="rounded-full w-20 h-20"
         />
-        <div className="text-center">
-          <h2 className="text-xl font-semibold">{userData.givenName}</h2>
-          <p><b>E-post: </b>{userData.email}</p>
+        <div className="text-start ml-7">
+          <p>
+            <b>Förnamn: </b>
+            <span className="ml-9">{userData.givenName}</span>
+          </p>
+          <p>
+            <b>Efternamn: </b>
+            <span className="ml-6">{userData.familyName}</span>
+          </p>
+          <p>
+            <b>E-post: </b>
+            <span className="ml-14">{userData.email}</span>
+          </p>
         </div>
       </div>
     </div>

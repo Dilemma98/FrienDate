@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-   <nav className="bg-gradient-to-b from-[#fdfbfa] to-[#f3e7eb] shadow-md py-4 rounded-b-4xl">
+   <nav className="bg-gradient-to-b from-[#EDE1E5] to-[#E0CAD1] shadow-md py-4 rounded-b-4xl">
   <div className="relative flex items-center max-w-7xl mx-auto px-6">
     {/* Centrerade länkar */}
     <ul className="flex space-x-8 text-[#562f39] text-lg font-semibold mx-auto">

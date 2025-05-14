@@ -11,7 +11,9 @@ const CustomToolbar: React.FC<ToolbarProps<CalendarEvent, object>> = ({
   onNavigate,
 }) => {
   return (
-    <div style={{ textAlign: "center", marginBottom: "1rem", marginTop: "1rem" }}>
+    <div
+      style={{ textAlign: "center", marginBottom: "1rem", marginTop: "1rem" }}
+    >
       <div
         style={{
           fontSize: "1.5rem",
@@ -64,22 +66,21 @@ interface CalendarEvent {
 }
 
 const colorMap: Record<string, string> = {
-  1: "#FF6F61", // Korallrosa
-  2: "#6B5B95", // Lila-lavendel
-  3: "#88B04B60", // Olivgrön
-  4: "#F7CAC9", // Ljusrosa
-  5: "#92A8D180", // Ljusblå
-  6: "#F2B5D4", // Ljuslavendel
-  7: "#F9AFAE", // Ljuskorall
-  8: "#C9B9D2", // Grå-lila
-  9: "#E0E0E2", // Mycket ljusgrå
-  10: "#4E8E8E", // Mörk turkos
-  11: "#F4E1D2", // Ljusbeige
-  12: "#F28D35", // Ljusorange
-  13: "#7C9D97", // Mörkblågrön
-  14: "#B7C3C1", // Ljus grå-grön
-  15: "#A5D8D9", // Mjuk turkosblå
-  16: "#FFB6C1", // Ljusrosa
+  1: "#FFE3D1", // Mjuk roströd
+  2: "#F0FFD1", // Urtvättad ljusrosa
+  3: "#C4CFB0", // Urtvättad grårosa
+  4: "#C2B0CF", // Dämpad blågrå
+  5: "#BA95A3", // Ljusgråblå
+  6: "#D2D6FA", // Ljus turkosblå
+  7: "#CCDCDE", // Ljus urtvättad rosé
+  8: "#C98BA3", // Dämpad lavendelblå
+  9: "#c7d2d3", // Faded blågrå
+  10: "#d1c5c5", // Blekt grårosa
+  11: "#E8C0EB", // Ljus blågrå
+  12: "#d0d8d9", // Ljus gråturkos
+  13: "#a8d1d5", // Ljus mintturkos
+  14: "#F2BF9D", // Svag roströd
+  15: "#b9c4c7", // Dämpad himmelsblå
 };
 
 export default function Calendar() {
@@ -91,7 +92,12 @@ export default function Calendar() {
       setEvents(fetchedEvents);
     };
 
+    //Looking for changes in the calendar every 30 seconds
+    const intervalId = setInterval(getEvents, 30000);
+
     getEvents();
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
   return renderCalendarUI(events);
@@ -125,13 +131,13 @@ async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
     // Parse the response body as JSON
     const calendarData = await response.json();
 
-     // Check if the 'items' property is a string (some API responses might send a string instead of an array)
+    // Check if the 'items' property is a string (some API responses might send a string instead of an array)
     const items =
       typeof calendarData.items === "string"
-       // If it's a string, parse it into an array
-        ? JSON.parse(calendarData.items)
-        // If it's already an array, use it directly
-        : calendarData.items;
+        ? // If it's a string, parse it into an array
+          JSON.parse(calendarData.items)
+        : // If it's already an array, use it directly
+          calendarData.items;
 
     // Map the fetched data into a format suitable for our Calendar component
     return items.map((event: any) => ({
@@ -152,32 +158,35 @@ async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
   }
 }
 
-// 🔹 Renderar kalender-UI
+// Render calendar UI with events
 function renderCalendarUI(events: CalendarEvent[]) {
   return (
-    <div
-      className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-4 h-[80vh]"
-    >
+    <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-4 h-[80vh]">
       <BigCalendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        defaultView="month" // Standardvy är månad
-        views={["month"]} // Vi behåller bara månadsvyn
+        defaultView="month" // Standardview is month
+        views={["month"]}
         style={{
           height: "100%",
           fontSize: "14px",
         }}
         eventPropGetter={(event) => ({
-          className: "event-item", // Lägg till CSS-klassen här om du vill ha specifik styling
+          className: "event-item", // Add a class for custom styling
           style: {
-            backgroundColor: event.colorId || "#FFB3BA", // Standardfärg om inget colorId finns
+            backgroundColor: event.colorId || "#EBDCC0", // Fallback color if no colorId
             color: "black",
             border: "none",
             textAlign: "center",
             position: "relative",
             fontSize: "0.8em",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            lineHeight: "1.2",
+            marginTop: "-0.2em",
           },
         })}
         components={{

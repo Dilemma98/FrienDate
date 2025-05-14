@@ -23,7 +23,7 @@ const Header = () => {
   }, [navigate]);
 
   return (
-  <header className="bg-gradient-to-b from-[#f3e7eb] to-[#fdfbfa] shadow-md">
+  <header className="bg-gradient-to-b from-[#E0CAD1] to-[#EDE1E5] shadow-md">
   <div className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-center">
     <button
       onClick={handleClick}
