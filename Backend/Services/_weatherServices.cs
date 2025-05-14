@@ -12,7 +12,7 @@ public class WeatherService
     public WeatherService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        _apiKey = configuration["WeatherApi:ApiKey"];
+        _apiKey = Environment.GetEnvironmentVariable("OPENWEATHER_API_KEY");
     }
 
     // This method fetches the weather category (e.g., sunny, rainy, snowy) for a given city
