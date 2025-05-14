@@ -13,6 +13,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import UserDashboard from "../src/components/userDashboard";
 import type { UserData } from "./declarations/declarations.d";
 import UserProfile from "./components/userProfile";
+import ActivitySuggestions from "./components/activitySuggestions";
 import "./style.css";
 // 🧩 2. App state
 interface AppState {
@@ -57,6 +58,10 @@ class App extends React.Component<{}, AppState> {
               <Route
                 path="/userProfile"
                 element={<UserProfile userData={this.state.userData} />} />
+              
+              <Route
+                path="/activitySuggestions"
+                element={<ActivitySuggestions />} />
             </Routes>
           </div>
           <Footer />

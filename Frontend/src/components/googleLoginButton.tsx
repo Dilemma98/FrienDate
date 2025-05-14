@@ -7,38 +7,53 @@ interface GoogleLoginButtonProps {
   setUserData: (data: UserData) => void;
 }
 
-const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) => {
+const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
+  setUserData,
+}) => {
   const navigate = useNavigate();
 
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       try {
-        const res = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
-          headers: {
-            Authorization: `Bearer ${response.access_token}`,
-          },
-        });
+        const res = await fetch(
+          "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos",
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          }
+        );
 
-        const userInfo = await res.json();
+        const profile = await res.json();
+        const userInfo = {
+          email: profile.emailAddresses?.[0]?.value || "",
+          name: profile.names?.[0]?.displayName || "",
+          picture: profile.photos?.[0]?.url || "",
+          given_name: profile.names?.[0]?.givenName || "",
+          family_name: profile.names?.[0]?.familyName || "",
+        };
+
         //For development purposes
-        // const backendRes = await fetch("http://localhost:5231/api/google/login", {
-
-        //When deployed
-        const backendRes = await fetch("http://152.42.135.43:5231/api/google/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-           credentials: 'include',
-          body: JSON.stringify({
-            Email: userInfo.email,
-            Name: userInfo.name,
-            Picture: userInfo.picture,
-            GivenName: userInfo.given_name,
-            FamilyName: userInfo.family_name,
-            Token: response.access_token,
-          }),
-        });
+        const backendRes = await fetch(
+          "http://localhost:5231/api/google/login",
+          {
+            //When deployed
+            // const backendRes = await fetch("http://152.42.135.43:5231/api/google/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              Email: userInfo.email,
+              Name: userInfo.name,
+              Picture: userInfo.picture,
+              GivenName: userInfo.given_name,
+              FamilyName: userInfo.family_name,
+              Token: response.access_token,
+            }),
+          }
+        );
 
         if (!backendRes.ok) {
           const errorText = await backendRes.text();
@@ -67,20 +82,27 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ setUserData }) =>
       }
     },
     onError: (error) => console.error("Login failed:", error),
-    scope:
-      "https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+    scope: [
+      "https://www.googleapis.com/auth/calendar.readonly",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/contacts.readonly",
+      "https://www.googleapis.com/auth/user.addresses.read",
+      "https://www.googleapis.com/auth/user.birthday.read",
+      "https://www.googleapis.com/auth/user.addresses.read"
+    ].join(" "),
   });
 
   return (
-<div className="p-6">
-  <button
-    onClick={() => login()}
-    className="w-full max-w-sm px-6 py-3 text-base font-medium text-white bg-[#562f39] border border-gray-300 rounded-lg shadow-sm hover:bg-[#bd7d8d] hover:cursor-pointer hover:shadow-lg hover:border-gray-400 transition flex items-center justify-center gap-3"
-  >
-    <FcGoogle className="text-2xl" />
-    Logga in med Google
-  </button>
-</div>
+    <div className="p-6">
+      <button
+        onClick={() => login()}
+        className="w-full max-w-sm px-6 py-3 text-base font-medium text-white bg-[#562f39] border border-gray-300 rounded-lg shadow-sm hover:bg-[#bd7d8d] hover:cursor-pointer hover:shadow-lg hover:border-gray-400 transition flex items-center justify-center gap-3"
+      >
+        <FcGoogle className="text-2xl" />
+        Logga in med Google
+      </button>
+    </div>
   );
 };
 

@@ -17,6 +17,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient<WeatherService>();
 
 var app = builder.Build();
 

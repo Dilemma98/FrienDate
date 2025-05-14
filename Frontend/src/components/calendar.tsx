@@ -142,13 +142,7 @@ async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
 function renderCalendarUI(events: CalendarEvent[]) {
   return (
     <div
-      style={{
-        height: "80vh",
-        width: "80%",
-        maxWidth: "800px",
-        margin: "0 auto",
-        fontFamily: "'Roboto', sans-serif",
-      }}
+      className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-4 h-[80vh]"
     >
       <BigCalendar
         localizer={localizer}

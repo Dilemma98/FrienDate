@@ -30,7 +30,7 @@ namespace _.Controllers
                 {
                     return Unauthorized("Ogiltig Google access-token");
                 }
-    
+
 
                 // Här returnerar vi hela användarobjektet till frontend
                 return Ok(new
@@ -88,55 +88,6 @@ namespace _.Controllers
             {
                 Console.WriteLine($"Fel vid hämtning av kalender: {ex.Message}");
                 return StatusCode(500, "Serverfel vid hämtning av kalender");
-            }
-        }
-
-        [HttpGet("fetchUserInfo")]
-        public async Task<IActionResult> FetchUserInfo()
-        {
-            var authHeader = Request.Headers["Authorization"].ToString();
-
-            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
-            {
-                return BadRequest("Access-token saknas eller är felaktigt formaterad");
-            }
-
-            var accessToken = authHeader.Replace("Bearer ", "");
-
-            try
-            {
-                var url = "https://www.googleapis.com/oauth2/v3/userinfo";
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-
-                var response = await _httpClient.SendAsync(request);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine($"Fel vid hämtning av användarinformation: {response.StatusCode}");
-                    return StatusCode((int)response.StatusCode, "Fel vid hämtning av användarinformation");
-                }
-
-                var responseContent = await response.Content.ReadAsStringAsync();
-
-                // Deserialisera JSON-svaret till GoogleUserInfo-objektet
-                var userInfo = JsonConvert.DeserializeObject<GoogleUserInfo>(responseContent);
-
-                if (userInfo == null)
-                {
-                    return StatusCode(500, "Kunde inte deserialisera användardata");
-                }
-
-                // Returnera användardata som objekt
-                Console.WriteLine("----------------------------");
-                Console.WriteLine($"Google UserInfo: {JsonConvert.SerializeObject(userInfo)}");
-                Console.WriteLine("----------------------------");
-                return Ok(userInfo); // Returnera som GoogleUserInfo-objekt
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Fel vid hämtning av användarinformation: {ex.Message}");
-                return StatusCode(500, "Serverfel vid hämtning av användarinformation");
             }
         }
 
