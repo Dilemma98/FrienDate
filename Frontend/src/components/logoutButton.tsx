@@ -3,7 +3,10 @@ import React from "react";
 const LogoutButton: React.FC = () => {
 
   const handleLogout = () => {
+    // Set 'isLoggedIn' in localStorage to 'false' to indicate the user is logged out
     localStorage.setItem("isLoggedIn", "false");
+    
+    // Dispatch a custom event 'userLogout' to notify other parts of the application about the logout
     window.dispatchEvent(new Event("userLogout"));
 };
 

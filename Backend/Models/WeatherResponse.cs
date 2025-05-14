@@ -1,12 +1,16 @@
 namespace FrienDateBackend.Models
 {
+    // This class represents the response from the weather API
     public class WeatherResponse
     {
-        public List<WeatherInfo> Weather { get; set; }
+        // List of weather conditions returned by the API (required during deserialization)
+        public required List<WeatherInfo> Weather { get; set; }
+    }
 
-        public class WeatherInfo
-        {
-            public string Main { get; set; }
-        }
+    // Nested class representing individual weather information
+    public class WeatherInfo
+    {
+        // Main weather condition (e.g., "Clear", "Rain", "Snow")
+        public required string Main { get; set; }
     }
 }

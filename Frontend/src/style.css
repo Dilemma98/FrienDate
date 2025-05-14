@@ -22,7 +22,7 @@ body{
 }
 
 .rbc-event-time {
-  display: none; /* Dölj tid som standard */
+  display: none; /* Hide time as standard */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -35,13 +35,13 @@ body{
 }
 
 .rbc-event:hover .rbc-event-time {
-  display: block; /* Visa tid vid hovring */
+  display: block; /* Show time when hovered */
 }
 
 /* styles.css */
 .event-item {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-radius: 8px; /* Rundade hörn */
+  border-radius: 8px;
   padding: 0.1em;
   font-size: 14px;
   text-align: center;
