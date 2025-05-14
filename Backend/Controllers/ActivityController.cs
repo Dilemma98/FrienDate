@@ -9,10 +9,13 @@ namespace _.Controllers
     {
         private readonly WeatherService _weatherService;
 
+        // Injecting WeatherService via constructor
         public ActivityController(WeatherService weatherService)
         {
             _weatherService = weatherService;
         }
+
+        // List of activity suggestions for sunny weather
         private static readonly List<string> SunnyActivities = new()
         {
             "Vandring i parken",
@@ -25,6 +28,7 @@ namespace _.Controllers
             "Promenad med glass"
         };
 
+        // List of activity suggestions for rainy weather
         private static readonly List<string> RainyActivities = new()
         {
             "Inomhusbio",
@@ -37,6 +41,7 @@ namespace _.Controllers
             "Escape room"
         };
 
+        // List of activity suggestions for snowy weather
         private static readonly List<string> SnowyActivities = new()
         {
             "Bygga snögubbe",
@@ -49,11 +54,14 @@ namespace _.Controllers
             "Bastu och isvak"
         };
 
+        // Endpoint that suggests activities based on weather in a given city
         [HttpGet("suggested-activities")]
         public async Task<IActionResult> GetSuggestedActivities([FromQuery] string city)
         {
+            // Get simplified weather category from the weather service
             var weather = await _weatherService.GetWeatherCategoryAsync(city);
 
+            // Get simplified weather category from the weather service
             List<string> activities = weather switch
             {
                 "soligt ☀️" => SunnyActivities,
@@ -65,7 +73,7 @@ namespace _.Controllers
                 "Ring en vän och hitta på något kul!"
             }
             };
-
+            // Return the selected activities and weather type
             return Ok(new { weather, activities });
         }
     }

@@ -1,32 +1,42 @@
 import React, { useEffect } from "react";
-import { UserData } from "../declarations/declarations.d";
+import { UserData } from "../declarations/declarations.d"; // Import UserData type from declarations
 
+// UserProfile component accepts userData prop which can be either a UserData object or null
 const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
 
+  // useEffect hook to fetch user information from the backend after component mounts
   useEffect(() => {
+    // Async function to fetch user info from the backend API
     const fetchUserInfo = async () => {
+      // Retrieve the access token from localStorage
       const accessToken = localStorage.getItem("accessToken");
+      // If there's no access token, exit early
       if (!accessToken) return;
 
       try {
+        // Make a GET request to fetch user info from the backend API
         const res = await fetch("http://localhost:5231/api/google/fetchUserInfo", {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // Send the access token in the Authorization header
           },
         });
 
+        // If the response isn't ok (status code is not 200), log an error
         if (!res.ok) {
           console.error("Fel vid hämtning av användarinfo från backend");
           return;
         }
 
       } catch (error) {
+        // If there is an error during the fetch operation, log the error
         console.error("Fel vid hämtning av användarinformation:", error);
       }
     };
 
+    // Call the fetchUserInfo function when the component mounts
     fetchUserInfo();
+     // Empty dependency array means this effect runs only once (on component mount)
   }, []);
 
   if (!userData) {

@@ -14,28 +14,29 @@ namespace _.Controllers
             _httpClient = httpClient;
         }
 
+        // POST: api/google/login
+        // Handles login by validating the Google access token and returning basic user information
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] GoogleUserInfo user)
         {
-            if (string.IsNullOrEmpty(user.Email) || string.IsNullOrEmpty(user.Token))
+            if (string.IsNullOrWhiteSpace(user?.Email) || string.IsNullOrWhiteSpace(user?.Token))
             {
-                return BadRequest("Email eller Token saknas");
+                return BadRequest("Email or Token is missing");
             }
 
             try
             {
-                // Validera access-token med Google API
+                // Validate access token with Google API
                 var validatedUser = await ValidateGoogleAccessToken(user.Token);
                 if (validatedUser == null)
                 {
-                    return Unauthorized("Ogiltig Google access-token");
+                    return Unauthorized("Invalid Google access token");
                 }
 
-
-                // Här returnerar vi hela användarobjektet till frontend
+                // Return validated user object to frontend
                 return Ok(new
                 {
-                    Message = "Inloggning lyckades",
+                    Message = "Login successful",
                     user = new
                     {
                         validatedUser.Name,
@@ -48,11 +49,13 @@ namespace _.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Fel vid tokenvalidering: {ex.Message}");
-                return StatusCode(500, "Serverfel vid validering av token");
+                Console.WriteLine($"Error during token validation: {ex.Message}");
+                return StatusCode(500, "Server error during token validation");
             }
         }
 
+        // GET: api/google/fetchCalendar
+        // Fetches the user's primary Google Calendar events
         [HttpGet("fetchCalendar")]
         public async Task<IActionResult> FetchCalendar()
         {
@@ -60,7 +63,7 @@ namespace _.Controllers
 
             if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
             {
-                return BadRequest("Access-token saknas eller är felaktigt formaterad");
+                return BadRequest("Access token is missing or incorrectly formatted");
             }
 
             var accessToken = authHeader.Replace("Bearer ", "");
@@ -77,22 +80,22 @@ namespace _.Controllers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"Fel vid hämtning av kalender: {response.StatusCode}");
-                    return StatusCode((int)response.StatusCode, "Fel vid hämtning av kalender");
+                    Console.WriteLine($"Error fetching calendar: {response.StatusCode}");
+                    return StatusCode((int)response.StatusCode, "Failed to fetch calendar");
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                return Ok(responseContent); // JSON-sträng
+                return Ok(responseContent); // Raw JSON string
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Fel vid hämtning av kalender: {ex.Message}");
-                return StatusCode(500, "Serverfel vid hämtning av kalender");
+                Console.WriteLine($"Error fetching calendar: {ex.Message}");
+                return StatusCode(500, "Server error while fetching calendar");
             }
         }
 
-        // Funktion för att validera Google access-token
-        private async Task<GoogleUserInfo> ValidateGoogleAccessToken(string accessToken)
+        // Helper method for validating a Google access token using the Google People API
+        private async Task<GoogleUserInfo?> ValidateGoogleAccessToken(string accessToken)
         {
             try
             {
@@ -104,49 +107,51 @@ namespace _.Controllers
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"Fel vid validering av access-token: {response.StatusCode}");
+                    Console.WriteLine($"Access token validation failed: {response.StatusCode}");
                     return null;
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Respons från Google API: {responseContent}");
+                Console.WriteLine($"Google API response: {responseContent}");
 
                 return JsonConvert.DeserializeObject<GoogleUserInfo>(responseContent);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Fel vid validering av access-token: {ex.Message}");
+                Console.WriteLine($"Exception during access token validation: {ex.Message}");
                 return null;
             }
         }
     }
+
+    // Data model representing the Google user information returned by the API
     public class GoogleUserInfo
     {
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [JsonProperty("picture")]
-        public string Picture { get; set; }
+        public string? Picture { get; set; }
 
         [JsonProperty("given_name")]
-        public string GivenName { get; set; }
+        public string? GivenName { get; set; }
 
         [JsonProperty("family_name")]
-        public string FamilyName { get; set; }
+        public string? FamilyName { get; set; }
 
-        public string Token { get; set; } // Från frontend
-
+        // Token sent from the frontend to be validated
+        public string? Token { get; set; }
     }
 
-    // Klass för att deserialisera svaret från Google's tokeninfo-API
+    // Model to deserialize optional token info if used elsewhere
     public class GoogleTokenInfo
     {
-        public string Sub { get; set; } // Google user ID
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Picture { get; set; }
+        public string? Sub { get; set; } // Google user ID
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Picture { get; set; }
     }
 }

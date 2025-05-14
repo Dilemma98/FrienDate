@@ -3,18 +3,22 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { UserData } from "../declarations/declarations.d";
 
+// Props for the GoogleLoginButton component, includes setUserData to update user info
 interface GoogleLoginButtonProps {
   setUserData: (data: UserData) => void;
 }
 
+// GoogleLoginButton component for handling user login via Google OAuth
 const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   setUserData,
 }) => {
   const navigate = useNavigate();
 
+  // Initialize Google login with success and error handlers
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       try {
+        // Fetch the user's profile data using the received access token
         const res = await fetch(
           "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos",
           {
@@ -33,17 +37,17 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           family_name: profile.names?.[0]?.familyName || "",
         };
 
-        //For development purposes
+        // Send the user data to the backend for validation
         const backendRes = await fetch(
           "http://localhost:5231/api/google/login",
           {
-            //When deployed
+            // For deployment, change to the actual backend URL
             // const backendRes = await fetch("http://152.42.135.43:5231/api/google/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            credentials: "include",
+            credentials: "include", // Include credentials for session management
             body: JSON.stringify({
               Email: userInfo.email,
               Name: userInfo.name,
@@ -55,6 +59,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           }
         );
 
+        // Check if the backend response is OK
         if (!backendRes.ok) {
           const errorText = await backendRes.text();
           try {
@@ -66,33 +71,35 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           throw new Error("Backend validation failed");
         }
 
+        // If successful, parse the backend user data and store it in localStorage
         const backendUser = await backendRes.json();
-
         localStorage.setItem("frienDateUser", JSON.stringify(backendUser.user));
         localStorage.setItem("accessToken", response.access_token);
         localStorage.setItem("isLoggedIn", "true");
 
+        // Set the user data in the parent component
         setUserData(backendUser.user);
 
+        // Trigger a custom event indicating the user is logged in
         window.dispatchEvent(new Event("userLogin"));
 
+        // Navigate to the user dashboard
         navigate("/userDashboard");
       } catch (err) {
+        // Log any errors that occur during login
         console.error("❌ Login error:", err);
       }
     },
     onError: (error) => console.error("Login failed:", error),
+    // Requested permissions for Google OAuth login
     scope: [
-      "https://www.googleapis.com/auth/calendar.readonly",
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email",
-      "https://www.googleapis.com/auth/contacts.readonly",
-      "https://www.googleapis.com/auth/user.addresses.read",
-      "https://www.googleapis.com/auth/user.birthday.read",
-      "https://www.googleapis.com/auth/user.addresses.read"
+      "https://www.googleapis.com/auth/calendar.readonly", // Read access to Google Calendar
+      "https://www.googleapis.com/auth/userinfo.profile", // Access to user's profile data
+      "https://www.googleapis.com/auth/userinfo.email", // Access to user's email address
     ].join(" "),
   });
 
+  // Render the Google login button
   return (
     <div className="p-6">
       <button

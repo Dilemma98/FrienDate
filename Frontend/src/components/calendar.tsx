@@ -116,24 +116,38 @@ async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
     );
 
     if (!response.ok) {
+      // If the response status is not OK, log the error status and the error message
       console.error("Felstatus:", response.status, await response.text());
+      // Throw an error to indicate that the data could not be fetched
       throw new Error("Kunde inte hämta kalenderdata");
     }
 
+    // Parse the response body as JSON
     const calendarData = await response.json();
+
+     // Check if the 'items' property is a string (some API responses might send a string instead of an array)
     const items =
       typeof calendarData.items === "string"
+       // If it's a string, parse it into an array
         ? JSON.parse(calendarData.items)
+        // If it's already an array, use it directly
         : calendarData.items;
 
+    // Map the fetched data into a format suitable for our Calendar component
     return items.map((event: any) => ({
+      // If no title is available, use a default message
       title: event.summary || "Ingen titel",
+      // Parse the start date, considering both dateTime or date formats
       start: new Date(event.start?.dateTime || event.start?.date),
+      // Parse the end date, considering both dateTime or date formats
       end: new Date(event.end?.dateTime || event.end?.date),
+      // If a colorId exists, map it to a color from the colorMap
       colorId: event.colorId ? colorMap[event.colorId] : undefined,
     }));
   } catch (err) {
+    // If an error occurs during the fetch or data processing, log the error
     console.error("❌ Fel vid hämtning av kalenderdata:", err);
+    // Return an empty array if something goes wrong
     return [];
   }
 }

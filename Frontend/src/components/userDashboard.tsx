@@ -1,16 +1,18 @@
 import React from "react";
-import Calendar from "./calendar"; // Om du vill använda Calendar-komponenten senare
-import { UserData } from "../declarations/declarations.d"; // Importera UserData från declarations
+import Calendar from "./calendar"; // Import the Calendar component if you want to use it later
+import { UserData } from "../declarations/declarations.d"; // Import UserData type from declarations
 
+// Define the UserProps interface for this component's props
 export interface UserProps {
-  userData: UserData | null; // Tillåt att userData kan vara null
+  userData: UserData | null; // userData can either be a UserData object or null
 }
 
+// UserDashboard component
 const UserDashboard: React.FC<UserProps> = ({ userData }) => {
+  // If userData is null (user is not logged in), display a login message
   if (!userData) {
-    return <div>Du måste logga in för att se din dashboard.</div>;
+    return <div>Du måste logga in för att se din dashboard.</div>; // Message in Swedish saying "You must log in to see your dashboard"
   }
-  console.log("User data in dashboard:", userData.givenName);
 
   return (
     <div className="text-center mb-20 mt-2">
@@ -26,7 +28,8 @@ const UserDashboard: React.FC<UserProps> = ({ userData }) => {
           />
         </div>
         <div className="mt-4">
-          {/* Lägg till här för att visa en kalender eller annan komponent */}
+          <h2 className="text-xl font-semibold text-[#562f39]">
+            Din personliga kalender </h2>
           <Calendar />
         </div>
       </div>

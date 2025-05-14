@@ -1,37 +1,38 @@
 import { useState } from 'react';
 
 function ActivitySuggestions() {
+  // State variables
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState('');
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Fetch activity suggestions based on city weather
   const fetchSuggestions = async () => {
-  if (!city) return;
-  setLoading(true);
-  setError('');
-  try {
-    const response = await fetch(`http://localhost:5231/api/activity/suggested-activities?city=${city}`);
-    console.log('Response status:', response.status); // Logga statuskoden
-    if (!response.ok) {
-      throw new Error('Kunde inte hämta aktiviteter');
-    }
+    if (!city) return;
+    setLoading(true);
+    setError('');
+    try {
+      const response = await fetch(`http://localhost:5231/api/activity/suggested-activities?city=${city}`);
+      console.log('Response status:', response.status); // Log status code
+      if (!response.ok) {
+        throw new Error('Kunde inte hämta aktiviteter');
+      }
 
-    const data = await response.json();
-    setWeather(data.weather);
-    setActivities(data.activities);
-  } catch (err) {
-    if (err instanceof Error) {
-      setError(err.message || 'Något gick fel');
-    } else {
-      setError('Något gick fel');
+      const data = await response.json();
+      setWeather(data.weather);
+      setActivities(data.activities);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || 'Något gick fel');
+      } else {
+        setError('Något gick fel');
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-4">
@@ -60,7 +61,7 @@ function ActivitySuggestions() {
       {weather && (
         <div className="mt-4 text-center">
           <h2 className="text-xl font-semibold">Det är {weather} ute idag</h2>
-            <p className="text-gray-600">Här är några förslag på aktiviteter:</p>
+          <p className="text-gray-600">Här är några förslag på aktiviteter:</p>
           <ul className="mt-4 list-disc list-inside text-lg text-gray-800">
             {activities.map((activity, index) => (
               <li className="list-none" key={index}>{activity}</li>
