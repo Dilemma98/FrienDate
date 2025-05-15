@@ -8,26 +8,34 @@ function ActivitySuggestions() {
   const [error, setError] = useState('');
 
   const fetchSuggestions = async () => {
+    //Dont proceed if no city is provided
   if (!city) return;
+   // Set loading to true and clear previous errors
   setLoading(true);
   setError('');
   try {
+     // Send GET request to the backend API with the selected city
     const response = await fetch(`http://localhost:5231/api/activity/suggested-activities?city=${city}`);
-    console.log('Response status:', response.status); // Logga statuskoden
+       // Log the response status for debugging
+    console.log('Response status:', response.status); 
+     // Throw an error if the response is not successful
     if (!response.ok) {
       throw new Error('Kunde inte hämta aktiviteter');
     }
-
+    // Parse the response JSON
     const data = await response.json();
+      // Set weather and activities state from the response
     setWeather(data.weather);
     setActivities(data.activities);
   } catch (err) {
+    // Handle both standard and unknown error types
     if (err instanceof Error) {
       setError(err.message || 'Något gick fel');
     } else {
       setError('Något gick fel');
     }
   } finally {
+     // Stop loading spinner or indicator
     setLoading(false);
   }
 };
