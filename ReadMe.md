@@ -8,7 +8,7 @@ FrienDate är tänkt att underlätta för människor att skapa och vårda sina r
 
 ✅ Se din personliga Google-kalender med dina kommande händelser
 
-✅ Få aktivitetsförslag baserat på väder och vald stad
+✅ Få aktivitetsförslag baserat på väder utifrån vald stad
 
 ---
 
@@ -22,10 +22,20 @@ https://github.com/Dilemma98/FrienDate/tree/Deploy/Frontend
 
 - Backend/ -API och serverlogik
 
-Backendens viktigaste delar är de enpoints jag har. En POST för att kunna logga in en användare via google.
-En GET för att hämta en inloggade användarens kalenderhändelser. En GET för att hämta väder, för att sedan kunna ge förslag på aktiviteter utifrån det.
-
 https://github.com/Dilemma98/FrienDate/tree/Deploy/Backend
+
+#### Endpoints
+Backendens viktigaste delar är de enpoints:
+- POST http://localhost:5231/api/google/login
+
+Denna endpoint tar emot följande värden i body: Name, Email, Picture, GivenName, FamilyName och Token.
+Syftet här är att autentisera en användare via Google OAuth och skapa en lokal användarsession
+- GET http://localhost:5231/api/google/fetchCalendar
+
+Här skickas användarens Google-token i authorization-headern. Endpointen autentiserar användaren och hämtar dennes kalenderhändelser, som sedan returneras sorterade efter datum.
+- GET http://localhost:5231/api/activity/suggested-activities?city=${city}
+
+Denna endpoint används för att hämta aktivitetsförslag baserat på vädret i den angivna staden. In skickar man en stad, och ut får man ett objekt innehållandes väder och aktiviteter
 
 ---
 
@@ -74,7 +84,7 @@ För att hämta väderdata krävs en API-nyckel från OpenWeatherMap.
 ```bash
 OPENWEATHER_API_KEY="din-api-nyckel"
 ```
-Och byt ut "din-api-nyckel" mot den du fick från Google Cloud Console
+Och byt ut "din-api-nyckel" mot den du fick från OpenWeatherMap
 
 ---
 

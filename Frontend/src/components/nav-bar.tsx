@@ -49,28 +49,28 @@ const Navbar: React.FC = () => {
     <ul className="flex space-x-8 text-[#562f39] text-lg font-semibold mx-auto">
       <li>
         <Link
-          to="/contact"
+          to="/contactUs"
           className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
         >
-          Kontakt
+          Kontakta oss
         </Link>
       </li>
       {!isLoggedIn ? (
         <>
           <li>
             <Link
-              to="/idea"
+              to="/aboutUs"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
-              Affärsidé
+              Om oss
             </Link>
           </li>
           <li>
             <Link
-              to="/plan"
+              to="/howItWorks"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
-              Affärsplan
+              Så funkar det
             </Link>
           </li>
         </>
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
           </li>
           <li>
             <Link
-              to="/groups"
+              to="/groupPage"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
               Grupper

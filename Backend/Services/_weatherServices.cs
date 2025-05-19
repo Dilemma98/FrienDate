@@ -3,46 +3,59 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+public class WeatherData
+{
+    public string Category { get; set; } = "unknown";
+    public double Temperature { get; set; }
+}
+
 public class WeatherService
 {
     private readonly HttpClient _httpClient;
     private readonly string? _apiKey;
 
-    // Constructor injects HttpClient and retrieves the weather API key from configuration
     public WeatherService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
         _apiKey = Environment.GetEnvironmentVariable("OPENWEATHER_API_KEY");
     }
 
-    // This method fetches the weather category (e.g., sunny, rainy, snowy) for a given city
-    public async Task<string> GetWeatherCategoryAsync(string city)
+    public async Task<WeatherData> GetWeatherDataAsync(string city)
     {
+        var weatherData = new WeatherData();
+
         if (string.IsNullOrEmpty(_apiKey))
         {
-            return "unknown";
+            return weatherData;
         }
 
         var url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={_apiKey}&units=metric";
 
         var response = await _httpClient.GetAsync(url);
         if (!response.IsSuccessStatusCode)
-            return "unknown";
+            return weatherData;
 
         var json = await response.Content.ReadAsStringAsync();
 
         try
         {
-            var doc = JsonDocument.Parse(json);
+            using var doc = JsonDocument.Parse(json);
 
-            // Try to extract the "main" weather condition, safely
+            // Hämta temperaturen
+            if (doc.RootElement.TryGetProperty("main", out var mainElement) &&
+                mainElement.TryGetProperty("temp", out var tempElement))
+            {
+                weatherData.Temperature = tempElement.GetDouble();
+            }
+
+            // Hämta väderkategori
             if (doc.RootElement.TryGetProperty("weather", out var weatherArray) &&
                 weatherArray.GetArrayLength() > 0 &&
-                weatherArray[0].TryGetProperty("main", out var mainElement))
+                weatherArray[0].TryGetProperty("main", out var weatherMainElement))
             {
-                var weatherMain = mainElement.GetString()?.ToLower();
+                var weatherMain = weatherMainElement.GetString()?.ToLower();
 
-                return weatherMain switch
+                weatherData.Category = weatherMain switch
                 {
                     "clear" => "soligt ☀️",
                     "clouds" => "soligt ☀️",
@@ -59,6 +72,6 @@ public class WeatherService
             Console.WriteLine($"JSON parsing error: {ex.Message}");
         }
 
-        return "unknown";
+        return weatherData;
     }
 }

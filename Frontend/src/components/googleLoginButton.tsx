@@ -20,7 +20,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       try {
         // Fetch the user's profile data using the received access token
         const res = await fetch(
-          "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos",
+          "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos,addresses",
           {
             headers: {
               Authorization: `Bearer ${response.access_token}`,
@@ -37,6 +37,8 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           family_name: profile.names?.[0]?.familyName || "",
         };
 
+        console.log("User info:", userInfo);
+        
         // Send the user data to the backend for validation
         const backendRes = await fetch(
           "http://localhost:5231/api/google/login",
@@ -95,7 +97,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     scope: [
       "https://www.googleapis.com/auth/calendar.readonly", // Read access to Google Calendar
       "https://www.googleapis.com/auth/userinfo.profile", // Access to user's profile data
-      "https://www.googleapis.com/auth/userinfo.email", // Access to user's email address
+      "https://www.googleapis.com/auth/userinfo.email",
     ].join(" "),
   });
 
@@ -104,7 +106,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     <div className="p-6">
       <button
         onClick={() => login()}
-        className="w-full max-w-sm px-6 py-3 text-base font-medium text-white bg-[#562f39] border border-gray-300 rounded-lg shadow-sm hover:bg-[#bd7d8d] hover:cursor-pointer hover:shadow-lg hover:border-gray-400 transition flex items-center justify-center gap-3"
+        className="w-full max-w-sm px-6 py-3 text-base font-medium text-white bg-gradient-to-b from-[#7a4c5a] to-[#89656f] border border-gray-300 rounded-lg shadow-sm hover:bg-[#bd7d8d] hover:cursor-pointer hover:shadow-lg hover:border-gray-400 transition flex items-center justify-center gap-3"
       >
         <FcGoogle className="text-2xl" />
         Logga in med Google

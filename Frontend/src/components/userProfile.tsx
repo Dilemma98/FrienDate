@@ -47,7 +47,7 @@ const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
   return (
     <div className="text-center w-4/5 max-w-2xl mx-auto my-12 p-6 bg-white rounded-lg shadow-xl mt-4 mb-15">
       <h1 className="text-3xl font-bold text-[#562f39] drop-shadow-md mb-4">
-        Användarprofil
+        Användarprofil 👤
       </h1>
       <div className="flex flex-col items-center gap-4">
         <img

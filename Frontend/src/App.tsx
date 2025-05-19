@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Contact from "../src/components/contact";
+import Contact from "./components/contactUs";
 import Footer from "../src/components/footer";
-import Idea from "../src/components/idea";
-import Plan from "../src/components/plan";
+import AboutUs from "../src/components/aboutUs";
+import HowItWorks from "../src/components/howItWorks";
 import NotFound from "../src/components/notFound";
 import Header from "../src/components/header";
 import HomePage from "../src/components/home";
@@ -14,7 +14,9 @@ import UserDashboard from "../src/components/userDashboard";
 import type { UserData } from "./declarations/declarations.d";
 import UserProfile from "./components/userProfile";
 import ActivitySuggestions from "./components/activitySuggestions";
+import GroupPage from "./components/groupPage";
 import "./style.css";
+
 // 🧩 2. App state
 interface AppState {
   userData: UserData | null;
@@ -43,9 +45,9 @@ class App extends React.Component<{}, AppState> {
             <NavBar />
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/idea" element={<Idea />} />
-              <Route path="/plan" element={<Plan />} />
+              <Route path="/contactUs" element={<Contact />} />
+              <Route path="/aboutUs" element={<AboutUs />} />
+              <Route path="/howItWorks" element={<HowItWorks />} />
               <Route
                 path="/googleLogin"
                 element={<GoogleLoginButton setUserData={this.setUserData} />}
@@ -62,6 +64,10 @@ class App extends React.Component<{}, AppState> {
               <Route
                 path="/activitySuggestions"
                 element={<ActivitySuggestions />} />
+                
+              <Route 
+              path="/groupPage" 
+              element={<GroupPage />} />
             </Routes>
           </div>
           <Footer />
