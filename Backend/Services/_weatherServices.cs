@@ -41,14 +41,14 @@ public class WeatherService
         {
             using var doc = JsonDocument.Parse(json);
 
-            // Hämta temperaturen
+            // Fetch temperature
             if (doc.RootElement.TryGetProperty("main", out var mainElement) &&
                 mainElement.TryGetProperty("temp", out var tempElement))
             {
                 weatherData.Temperature = tempElement.GetDouble();
             }
 
-            // Hämta väderkategori
+            // Fetch weather category
             if (doc.RootElement.TryGetProperty("weather", out var weatherArray) &&
                 weatherArray.GetArrayLength() > 0 &&
                 weatherArray[0].TryGetProperty("main", out var weatherMainElement))

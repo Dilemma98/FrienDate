@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// Sets the structure of the group object
 interface Group {
   name: string;
   members: string[];
@@ -7,27 +8,38 @@ interface Group {
 
 export default function GroupPage() {
   const [groups, setGroups] = useState<Group[]>([
-    { name: "Tjejgänget 👑", members: ["Emma", "Kristin", "Matilda"] },
+    // Hardcoded groups for demonstration
+    { name: "Bästa vännerna 💖", members: ["Emma", "Kristin", "Matilda"] },
     { name: "Tramsbyttorna 🍷🥂🍸", members: ["Emma", "Tuva", "Tintin"] },
   ]);
 
+    // State for creating a new group
   const [newGroupName, setNewGroupName] = useState("");
-  const [newGroupMembers, setNewGroupMembers] = useState(""); // 🔧 ändrat från string[] till string
-  const [error, setError] = useState(""); // 🔧 lagt till error
+    // State for new group members
+  const [newGroupMembers, setNewGroupMembers] = useState(""); 
+    // State for error messages
+  const [error, setError] = useState(""); 
 
+    // Function to create a new group and add it to the list
+  // Checks if the group name and members are not empty
   const createGroup = () => {
     if (!newGroupName || !newGroupMembers) {
       setError("Gruppnamn och medlemmar kan inte vara tomma");
       return;
     }
 
+    // Make sure groupmembers are being split by comma
+    // and trimmed of whitespace
     const membersArray = newGroupMembers
       .split(",")
       .map((member) => member.trim())
-      .filter((member) => member); // tar bort tomma strängar
+      // Filter out empty names
+      .filter((member) => member);
 
+      // Creates a new group object and updates the state
     const newGroup: Group = { name: newGroupName, members: membersArray };
     setGroups([...groups, newGroup]);
+    // Clear the input fields
     setNewGroupName("");
     setNewGroupMembers("");
     setError("");
@@ -35,7 +47,6 @@ export default function GroupPage() {
 
   return (
     <div className="max-w-xl mx-auto mt-4 mb-20 p-6 bg-white rounded-lg shadow">
-      {/* <p className="text-center">Obs, sidan är under konstruktion</p> */}
       <h1 className="text-3xl font-bold text-center text-[#562f39] mb-6 drop-shadow">
         Dina grupper 👥
       </h1>
