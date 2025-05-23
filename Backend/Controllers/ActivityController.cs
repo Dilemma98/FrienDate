@@ -17,7 +17,7 @@ public class ActivityController : ControllerBase
     private static readonly List<string> SunnyActivities = new()
     {
         "🥾 Promenad i skogen",
-        "☕ Kaffepaus på uteservering",
+        "☕ Kaffepaus på en uteservering",
         "🧺 Picknick vid vattnet",
         "🏋️‍♂️ Utegym eller träning i solen",
         "⛳ Spela minigolf",
@@ -58,6 +58,7 @@ public class ActivityController : ControllerBase
         var activities = weatherData.Category switch
         {
             "soligt ☀️" => SunnyActivities,
+            "målnigt ☁️" => SunnyActivities, 
             "regnigt ☔" => RainyActivities,
             "snöigt ❄️" => SnowyActivities,
             _ => new List<string> { "Planera något spontant!", "Ring en vän och hitta på något kul!" }
