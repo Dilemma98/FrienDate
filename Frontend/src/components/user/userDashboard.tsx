@@ -3,6 +3,7 @@ import Calendar from "../calendar/calendar"; // Import the Calendar component if
 import { UserData } from "../../declarations/declarations"; // Import UserData type from declarations
 import { ErrorBoundary } from "react-error-boundary"; // Import ErrorBoundary for error handling
 import ErrorFallback from "../../errorBoundary"; // Import the ErrorFallback component for error handling
+import AddEventButton from "../buttonAddEvent";
 
 // Define the UserProps interface for this component's props
 export interface UserProps {
@@ -36,6 +37,7 @@ const UserDashboard: React.FC<UserProps> = ({ userData }) => {
             FallbackComponent={ErrorFallback}
             onReset={() => window.location.reload()}
           >
+            <AddEventButton />
             <Calendar />
           </ErrorBoundary>
         </div>

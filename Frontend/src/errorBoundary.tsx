@@ -2,6 +2,7 @@
 
 import { FallbackProps } from "react-error-boundary";
 
+//Component shown when an error is caught by the ErrorBoundary
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <div role="alert" className="text-center mt-20">

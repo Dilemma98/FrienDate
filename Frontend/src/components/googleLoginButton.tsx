@@ -95,7 +95,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     onError: (error) => console.error("Login failed:", error),
     // Requested permissions for Google OAuth login
     scope: [
-      "https://www.googleapis.com/auth/calendar.readonly", // Read access to Google Calendar
+      "https://www.googleapis.com/auth/calendar.events", // Read access to Google Calendar
       "https://www.googleapis.com/auth/userinfo.profile", // Access to user's profile data
       "https://www.googleapis.com/auth/userinfo.email",
     ].join(" "),
