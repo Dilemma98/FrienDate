@@ -21,17 +21,18 @@ function renderCalendarUI(events: any[],
     // 📌 Attach the calendarRef to the container to enable scroll on mount
     <div
       ref={calendarRef}
-      className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-4 h-[80vh]"
+      className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-4 h-[110vh]"
     >
       <BigCalendar
         localizer={localizer}
         events={events}
+        showAllEvents
         startAccessor="start"
         endAccessor="end"
         defaultView="month"
         views={["month"]}
         style={{
-          height: "100%",
+          height: "100vh",
           fontSize: "14px",
         }}
         eventPropGetter={(event) => ({
