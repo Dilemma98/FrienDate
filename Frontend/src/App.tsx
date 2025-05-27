@@ -15,6 +15,7 @@ import type { UserData } from "./declarations/declarations.d";
 import UserProfile from "./components/user/userProfile";
 import ActivitySuggestions from "./components/activitySuggestions";
 import GroupPage from "./components/groupPage";
+import { UserProvider } from "./components/providers/userProvider";
 import "./style.css";
 
 // 🧩 2. App state
@@ -39,6 +40,7 @@ class App extends React.Component<{}, AppState> {
   render() {
     return (
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <UserProvider>
         <Router>
           <div>
             <Header />
@@ -50,7 +52,7 @@ class App extends React.Component<{}, AppState> {
               <Route path="/howItWorks" element={<HowItWorks />} />
               <Route
                 path="/googleLogin"
-                element={<GoogleLoginButton setUserData={this.setUserData} />}
+                element={<GoogleLoginButton/>}
               />
               <Route
                 path="/userDashboard"
@@ -72,6 +74,7 @@ class App extends React.Component<{}, AppState> {
           </div>
           <Footer />
         </Router>
+        </UserProvider>
       </GoogleOAuthProvider>
     );
   }

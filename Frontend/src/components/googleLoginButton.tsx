@@ -1,19 +1,12 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { UserData } from "../declarations/declarations.d";
+import { useUser } from "./context/userContext";
 
-// Props for the GoogleLoginButton component, includes setUserData to update user info
-interface GoogleLoginButtonProps {
-  setUserData: (data: UserData) => void;
-}
+const GoogleLoginButton: React.FC = () => {
 
-// GoogleLoginButton component for handling user login via Google OAuth
-const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
-  setUserData,
-}) => {
   const navigate = useNavigate();
-
+  const {setUserData, setIsLoggedIn } = useUser();
   // Initialize Google login with success and error handlers
   const login = useGoogleLogin({
     onSuccess: async (response) => {
@@ -36,8 +29,6 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           given_name: profile.names?.[0]?.givenName || "",
           family_name: profile.names?.[0]?.familyName || "",
         };
-
-        console.log("User info:", userInfo);
         
         // Send the user data to the backend for validation
         const backendRes = await fetch(
@@ -81,6 +72,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
 
         // Set the user data in the parent component
         setUserData(backendUser.user);
+        setIsLoggedIn(true);
 
         // Trigger a custom event indicating the user is logged in
         window.dispatchEvent(new Event("userLogin"));
@@ -100,6 +92,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       "https://www.googleapis.com/auth/userinfo.email",
     ].join(" "),
   });
+
 
   // Render the Google login button
   return (
