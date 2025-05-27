@@ -33,6 +33,13 @@ Syftet här är att autentisera en användare via Google OAuth och skapa en loka
 - GET http://localhost:5231/api/google/fetchCalendar
 
 Här skickas användarens Google-token i authorization-headern. Endpointen autentiserar användaren och hämtar dennes kalenderhändelser, som sedan returneras sorterade efter datum.
+- POST http://localhost:5231/api/google/addEvent
+
+Här kollas det först om innehållet i mina input-fält är tomma. Om de är det returneras en bad request.
+Om de inte är tomma går den vidare och extraherar accessToken från requestHeadern.
+Är däremot token giltig och korrekt formaterad skickas ett post-anrop till Google Calendars API-spec.
+Om API:et svarar framgångsrikt returneras 200OK med ett meddelande som förtydligar detta.
+
 - GET http://localhost:5231/api/activity/suggested-activities?city=${city}
 
 Denna endpoint används för att hämta aktivitetsförslag baserat på vädret i den angivna staden. In skickar man en stad, och ut får man ett objekt innehållandes väder och aktiviteter
