@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import GoogleLoginButton from "./googleLoginButton";
-import UserDashboard from "./userDashboard";
+import UserDashboard from "./user/userDashboard";
 import type { UserData } from "../declarations/declarations.d";
 
 const HomePage: React.FC = () => {
@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
 
-  // Hämta användardata vid mount
+  // Fetch user data from localStorage on initial render
   useEffect(() => {
     const storedUser = localStorage.getItem("frienDateUser");
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
     }
   }, []);
 
-  // Lyssna på inloggning/utloggning
+  // Listen for login/logout events to update user data and login status
   useEffect(() => {
     const handleLogin = () => {
       const storedUser = localStorage.getItem("frienDateUser");
@@ -51,13 +51,9 @@ const HomePage: React.FC = () => {
     };
   }, []);
 
-  // Visa endast en vy baserat på inloggningsstatus
-  if (isLoggedIn && userData) {
-    return <UserDashboard userData={userData} />;
-  }
-
   return (
   <div className="mt-10 flex items-center justify-center px-4">
+     {/* If not logged in, show login button */}
     {!isLoggedIn || !userData ? (
       <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-8">
         <h1 className="text-3xl font-semibold text-[#333333] mb-4 text-center">
@@ -71,6 +67,7 @@ const HomePage: React.FC = () => {
         </div>
       </div>
     ) : (
+      // If logged in, show user dashboard
       <UserDashboard userData={userData} />
     )}
   </div>
