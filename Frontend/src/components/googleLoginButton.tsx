@@ -108,6 +108,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         onClick={() => login()}
         className="w-full max-w-sm px-6 py-3 text-base font-medium text-white bg-gradient-to-b from-[#7a4c5a] to-[#89656f] border border-gray-300 rounded-lg shadow-sm hover:bg-[#bd7d8d] hover:cursor-pointer hover:shadow-lg hover:border-gray-400 transition flex items-center justify-center gap-3"
       >
+        {/* Using FcGoogle to access logo */}
         <FcGoogle className="text-2xl" />
         Logga in med Google
       </button>

@@ -1,6 +1,8 @@
 import React from "react";
-import Calendar from "./calendar"; // Import the Calendar component if you want to use it later
-import { UserData } from "../declarations/declarations.d"; // Import UserData type from declarations
+import Calendar from "../calendar/calendar"; // Import the Calendar component if you want to use it later
+import { UserData } from "../../declarations/declarations"; // Import UserData type from declarations
+import { ErrorBoundary } from "react-error-boundary"; // Import ErrorBoundary for error handling
+import ErrorFallback from "../../errorBoundary"; // Import the ErrorFallback component for error handling
 
 // Define the UserProps interface for this component's props
 export interface UserProps {
@@ -30,7 +32,12 @@ const UserDashboard: React.FC<UserProps> = ({ userData }) => {
         <div className="mt-4">
           <h2 className="text-xl font-semibold text-[#562f39]">
             Din personliga kalender </h2>
-          <Calendar />
+            <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => window.location.reload()}
+          >
+            <Calendar />
+          </ErrorBoundary>
         </div>
       </div>
     </div>

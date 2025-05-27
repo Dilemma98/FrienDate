@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { UserData } from "../declarations/declarations.d"; // Import UserData type from declarations
+import { UserData } from "../../declarations/declarations"; // Import UserData type from declarations
 
 // UserProfile component accepts userData prop which can be either a UserData object or null
 const UserProfile: React.FC<{ userData: UserData | null }> = ({ userData }) => {
