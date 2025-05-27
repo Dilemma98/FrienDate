@@ -95,15 +95,14 @@ namespace _.Controllers
         }
 
         [HttpPost("addEvent")]
-        // Adds a new event to the user's primary Google Calendar
-        public async Task<IActionResult> AddEvent([FromBody] GoogleTokenInfo tokenInfo)
+        public async Task<IActionResult> AddEvent([FromBody] GoogleEvent eventData)
         {
-            // Validate the token information
-            if (tokenInfo == null || string.IsNullOrEmpty(tokenInfo.Sub))
+            if (eventData == null || string.IsNullOrEmpty(eventData.summary)
+                || eventData.start == null || string.IsNullOrEmpty(eventData.start.dateTime)
+                || eventData.end == null || string.IsNullOrEmpty(eventData.end.dateTime))
             {
-                return BadRequest("Invalid token information");
+                return BadRequest("Ogiltig event-data");
             }
-
             // Extract the access token from the Authorization header
             var authHeader = Request.Headers["Authorization"].ToString();
             // Check if the Authorization header is present and formatted correctly
@@ -116,6 +115,12 @@ namespace _.Controllers
             // and validate it
             var accessToken = authHeader.Replace("Bearer ", "");
 
+            var userInfo = await ValidateGoogleAccessToken(accessToken);
+            if (userInfo == null)
+            {
+                return Unauthorized("Invalid or expired token");
+            }
+
             try
             {
                 // Google Calendar API endpoint to add an event
@@ -125,15 +130,9 @@ namespace _.Controllers
                 // Add access token to the request header
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
 
-                // Example event data
-                var eventData = new
-                {
-                    summary = "New Event",
-                    start = new { dateTime = "2023-01-01T10:00:00Z" },
-                    end = new { dateTime = "2023-01-01T11:00:00Z" }
-                };
-                // Serialize the event data to JSON and set it as the request content
-                request.Content = new StringContent(JsonConvert.SerializeObject(eventData), System.Text.Encoding.UTF8, "application/json");
+                var json = JsonConvert.SerializeObject(eventData);
+                request.Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
                 // Send the request to the Google Calendar API
                 var response = await _httpClient.SendAsync(request);
                 // Check if the response indicates success
@@ -212,5 +211,17 @@ namespace _.Controllers
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Picture { get; set; }
+    }
+
+    public class EventDateTime
+    {
+        public string? dateTime { get; set; }
+    }
+
+    public class GoogleEvent
+    {
+        public string? summary { get; set; }
+        public EventDateTime? start { get; set; }
+        public EventDateTime? end { get; set; }
     }
 }
