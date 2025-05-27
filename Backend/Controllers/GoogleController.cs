@@ -94,6 +94,65 @@ namespace _.Controllers
             }
         }
 
+        [HttpPost("addEvent")]
+        // Adds a new event to the user's primary Google Calendar
+        public async Task<IActionResult> AddEvent([FromBody] GoogleTokenInfo tokenInfo)
+        {
+            // Validate the token information
+            if (tokenInfo == null || string.IsNullOrEmpty(tokenInfo.Sub))
+            {
+                return BadRequest("Invalid token information");
+            }
+
+            // Extract the access token from the Authorization header
+            var authHeader = Request.Headers["Authorization"].ToString();
+            // Check if the Authorization header is present and formatted correctly
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            {
+                return BadRequest("Access token is missing or incorrectly formatted");
+            }
+
+            // Remove "Bearer " prefix to get the access token
+            // and validate it
+            var accessToken = authHeader.Replace("Bearer ", "");
+
+            try
+            {
+                // Google Calendar API endpoint to add an event
+                var url = "https://www.googleapis.com/calendar/v3/calendars/primary/events";
+                // Create the HTTP request to add an event
+                var request = new HttpRequestMessage(HttpMethod.Post, url);
+                // Add access token to the request header
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+                // Example event data
+                var eventData = new
+                {
+                    summary = "New Event",
+                    start = new { dateTime = "2023-01-01T10:00:00Z" },
+                    end = new { dateTime = "2023-01-01T11:00:00Z" }
+                };
+                // Serialize the event data to JSON and set it as the request content
+                request.Content = new StringContent(JsonConvert.SerializeObject(eventData), System.Text.Encoding.UTF8, "application/json");
+                // Send the request to the Google Calendar API
+                var response = await _httpClient.SendAsync(request);
+                // Check if the response indicates success
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Error adding event: {response.StatusCode}");
+                    return StatusCode((int)response.StatusCode, "Failed to add event");
+                }
+                //Return success message if the event was added successfully
+                return Ok("Event added successfully");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and return a server error status
+                Console.WriteLine($"Error adding event: {ex.Message}");
+                return StatusCode(500, "Server error while adding event");
+            }
+        }
+
         // Helper method for validating a Google access token using the Google People API
         private async Task<GoogleUserInfo?> ValidateGoogleAccessToken(string accessToken)
         {
