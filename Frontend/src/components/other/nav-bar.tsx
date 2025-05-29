@@ -76,14 +76,14 @@ const Navbar: React.FC = () => {
         </>
       ) : (
         <>
-          <li>
+          {/* <li>
             <Link
               to="/userProfile"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
               Profil
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to="/activitySuggestions"
@@ -92,14 +92,14 @@ const Navbar: React.FC = () => {
               Aktivitetsförslag
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/groupPage"
               className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
             >
               Grupper
             </Link>
-          </li>
+          </li> */}
         </>
       )}
     </ul>
