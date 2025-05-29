@@ -25,6 +25,7 @@ const Header = () => {
   return (
   <header className="bg-gradient-to-b from-[#E0CAD1] to-[#EDE1E5] shadow-md">
   <div className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-center">
+
     <button
       onClick={handleClick}
       className="text-6xl font-bold text-[#562f39] drop-shadow-sm transition duration-300 hover:cursor-pointer hover:text-[#bd7d8d] font-[Studydesk]"

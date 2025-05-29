@@ -53,3 +53,29 @@ async function fetchCalendarEvents(): Promise<any[]> {
 }
 
 export default fetchCalendarEvents;
+
+// Add new calendar event
+export async function addCalendarEvent(
+  accessToken: string,
+  eventTitle: string,
+  startDateTime: string,
+  endDateTime: string
+) {
+  const response = await fetch("http://localhost:5231/api/google/addEvent", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      summary: eventTitle,
+      start: { dateTime: new Date(startDateTime).toISOString() },
+      end: { dateTime: new Date(endDateTime).toISOString() },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText);
+  }
+}

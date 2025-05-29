@@ -1,34 +1,21 @@
 import { useState } from 'react';
+import { fetchActivitySuggestions } from './weatherService';
 
 function ActivitySuggestions() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState('');
-  const [temperature, setTemperature] = useState(null);
-  const [activities, setActivities] = useState([]);
+  const [temperature, setTemperature] = useState<number | null>(null);
+  const [activities, setActivities] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Fetch activity suggestions based on city and weather
-  const fetchSuggestions = async () => {
-    if (!city) return; // Exit if city is empty
-
-    setLoading(true);   // Start loading
-    setError('');       // Clear previous error
-
+  const handleFetch = async () => {
+    if (!city) return;
+    setLoading(true);
+    setError('');
     try {
-      // Call backend API with city as query parameter
-      const response = await fetch(`http://localhost:5231/api/activity/suggested-activities?city=${city}`);
-
-      if (!response.ok) {
-        throw new Error('Kunde inte hämta aktiviteter');
-      }
-
-      // Parse JSON response
-      const data = await response.json();
-
-      // Update state with weather info and activities
+      const data = await fetchActivitySuggestions(city);
       setWeather(data.weather);
-      //Fetch temperature from the response
       setTemperature(data.temperature);
       setActivities(data.activities);
     } catch (err) {
@@ -38,7 +25,7 @@ function ActivitySuggestions() {
         setError('Något gick fel');
       }
     } finally {
-      setLoading(false); // Stop loading indicator
+      setLoading(false);
     }
   };
 
@@ -52,18 +39,19 @@ function ActivitySuggestions() {
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          //Search on Enter key press
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
-              fetchSuggestions();
+              handleFetch();
             }
           }}
           placeholder="t.ex. Stockholm"
-          className="p-2 border rounded-md shadow-sm w-2/3"/>
+          className="p-2 border rounded-md shadow-sm w-2/3"
+        />
         <button
-          onClick={fetchSuggestions}
-          className="m-2 p-2 text-md font-bold text-white rounded-full shadow-md bg-gradient-to-b from-[#7a4c5a] to-[#89656f] hover:scale-105 transition-all hover:cursor-pointer">
+          onClick={handleFetch}
+          className="m-2 p-2 text-md font-bold text-white rounded-full shadow-md bg-gradient-to-b from-[#7a4c5a] to-[#89656f] hover:scale-105 transition-all hover:cursor-pointer"
+        >
           Hämta förslag
         </button>
       </div>
@@ -73,20 +61,19 @@ function ActivitySuggestions() {
 
       {weather && (
         <div className="mt-4 text-center">
-         {typeof temperature === 'number' && (
-          // Display weather and temperature if available
-          // Also round the temperature to the nearest integer
-          <h2 className="text-xl font-semibold">
-            Det är {weather} och cirka {Math.round(temperature)}°C ute idag
-          </h2>
-        )}
+          {typeof temperature === 'number' && (
+            <h2 className="text-xl font-semibold">
+              Det är {weather} och cirka {Math.round(temperature)}°C ute idag
+            </h2>
+          )}
           <p className="text-gray-600 mt-2">Här är några förslag på aktiviteter:</p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             {activities.map((activity, index) => (
               <span
                 key={index}
-                className="bg-[#EDE1E5] text-[#562f39] px-4 py-2 rounded-full text-sm font-semibold shadow hover:bg-[#D6B4BF] transition">
-              {activity}
+                className="bg-[#EDE1E5] text-[#562f39] px-4 py-2 rounded-full text-sm font-semibold shadow hover:bg-[#D6B4BF] transition"
+              >
+                {activity}
               </span>
             ))}
           </div>

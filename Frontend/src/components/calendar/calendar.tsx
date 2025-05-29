@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import fetchCalendarEvents from "./calendarService";
 import renderCalendarUI from "./calendarUI";
@@ -15,8 +15,6 @@ interface CalendarEvent {
 export default function Calendar() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
 
-  // 📌 Reference to the calendar container
-  const calendarRef = useRef<HTMLDivElement | null>(null);
   
   useEffect(() => {
     const getEvents = async () => {
@@ -25,15 +23,9 @@ export default function Calendar() {
     };
 
     getEvents();
-
-    // 📌 Scroll to the calendar element on component mount
-    // This helps the presentation jump straight to the calendar without manual scroll
-    if (calendarRef.current) {
-      calendarRef.current.scrollIntoView({ behavior: "smooth" });
-    }
     
   }, []);
 
-  return renderCalendarUI(events, calendarRef);
+  return renderCalendarUI(events);
 }
 
