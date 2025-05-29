@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addCalendarEvent } from "./calendarService"; // Importera din service-funktion
 
-const AddEvent = ({ onClose }: any) => {
+const AddEvent = ({ onClose, defaultDate }: any) => {
   const [eventTitle, setEventTitle] = useState("");
   const [startDateTime, setStartDateTime] = useState("");
   const [endDateTime, setEndDateTime] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // To make sure date for event to be added is set by slotInfo
+  useEffect(() => {
+    if (defaultDate) {
+      // To get correct pre-written date for selected day
+      const year = defaultDate.getFullYear();
+      const month = String(defaultDate.getMonth() + 1).padStart(2, "0");
+      const day = String(defaultDate.getDate()).padStart(2, "0");
+      setStartDateTime(`${year}-${month}-${day}T10:00`);
+      setEndDateTime(`${year}-${month}-${day}T11:00`);
+    }
+  }, [defaultDate]);
 
   const handleAddEvent = async () => {
     setMessage("");
@@ -28,13 +40,18 @@ const AddEvent = ({ onClose }: any) => {
         return;
       }
 
-      await addCalendarEvent(accessToken, eventTitle, startDateTime, endDateTime);
+      await addCalendarEvent(
+        accessToken,
+        eventTitle,
+        startDateTime,
+        endDateTime
+      );
 
       setMessage("Händelse tillagd framgångsrikt!");
       setEventTitle("");
       setStartDateTime("");
       setEndDateTime("");
-      window.location.reload(); // Om du vill ladda om sidan
+      window.location.reload();
     } catch (error: any) {
       setMessage(`Kunde inte lägga till händelse: ${error.message || error}`);
     }

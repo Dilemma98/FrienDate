@@ -28,14 +28,11 @@ const Navbar: React.FC = () => {
       }
     };
 
-    // Init check
     checkLoginStatus();
 
-    // Lyssna på custom events
     window.addEventListener("userLogin", checkLoginStatus);
     window.addEventListener("userLogout", checkLoginStatus);
 
-    // Clean up
     return () => {
       window.removeEventListener("userLogin", checkLoginStatus);
       window.removeEventListener("userLogout", checkLoginStatus);
@@ -43,24 +40,22 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-   <nav className="bg-gradient-to-b from-[#EDE1E5] to-[#E0CAD1] shadow-md py-4 rounded-b-4xl">
-  <div className="relative flex items-center max-w-7xl mx-auto px-6">
-    {/* Centrerade länkar */}
-    <ul className="flex space-x-8 text-[#562f39] text-lg font-semibold mx-auto">
-      <li>
-        <Link
-          to="/contactUs"
-          className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
-        >
-          Kontakta oss
-        </Link>
-      </li>
-      {!isLoggedIn ? (
-        <>
+    <nav className="bg-gradient-to-b from-[#EDE1E599] to-[#E0CAD199] shadow-md py-4 rounded-b-4xl">
+      <div className="max-w-6xl mx-auto px-4 flex flex-wrap items-center justify-center md:justify-between gap-4">
+        {/* Länkar */}
+        <ul className="flex flex-wrap justify-center gap-6 text-[#562f39] text-lg font-semibold">
+          <li>
+            <Link
+              to="/contactUs"
+              className="hover:text-[#bd7d8d] transition-colors duration-300"
+            >
+              Kontakta oss
+            </Link>
+          </li>
           <li>
             <Link
               to="/aboutUs"
-              className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
+              className="hover:text-[#bd7d8d] transition-colors duration-300"
             >
               Om oss
             </Link>
@@ -68,49 +63,21 @@ const Navbar: React.FC = () => {
           <li>
             <Link
               to="/howItWorks"
-              className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
+              className="hover:text-[#bd7d8d] transition-colors duration-300"
             >
               Så funkar det
             </Link>
           </li>
-        </>
-      ) : (
-        <>
-          {/* <li>
-            <Link
-              to="/userProfile"
-              className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
-            >
-              Profil
-            </Link>
-          </li> */}
-          <li>
-            <Link
-              to="/activitySuggestions"
-              className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
-            >
-              Aktivitetsförslag
-            </Link>
-          </li>
-          {/* <li>
-            <Link
-              to="/groupPage"
-              className="hover:text-[#bd7d8d] hover:underline transition-colors duration-300"
-            >
-              Grupper
-            </Link>
-          </li> */}
-        </>
-      )}
-    </ul>
+        </ul>
 
-    {isLoggedIn && (
-      <div className="md:absolute md:top-0 md:right-6">
-        <LogoutButton />
+        {/* Logout-knapp */}
+        {isLoggedIn && (
+          <div className="flex justify-center md:justify-end w-full md:w-auto">
+            <LogoutButton />
+          </div>
+        )}
       </div>
-    )}
-  </div>
-</nav>
+    </nav>
   );
 };
 

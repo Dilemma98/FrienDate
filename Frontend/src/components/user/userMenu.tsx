@@ -25,7 +25,7 @@ const UserMenu = () => {
       {/* Toggle-knapp – endast mobil */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="md:hidden text-sm text-[#562f39] dark:text-[#e2cfd4] underline mt-1 mb-2"
+        className="md:hidden text-md text-[#562f39] dark:text-[#e2cfd4] underline mt-1 mb-2 font-bold"
       >
         {menuOpen ? "Dölj meny ▲" : "Visa meny ▼"}
       </button>

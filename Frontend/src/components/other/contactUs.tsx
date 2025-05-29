@@ -1,6 +1,6 @@
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fdfcfd] to-[#faf7f9] py-12 px-4">
+    <div className="min-h-screen py-12 px-4">
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-3xl p-8 md:p-12">
         <h1 className="text-3xl md:text-4xl font-bold text-center text-[#562f39] drop-shadow mb-4">
           Kontakta oss 📧

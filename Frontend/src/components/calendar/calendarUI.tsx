@@ -2,7 +2,7 @@ import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { sv } from "date-fns/locale/sv";
 import CustomToolbar from "./customToolBar";
-import AddEventButton from "./buttonAddEvent";
+import ActivitySuggestionsButton from "../activitySuggestions/buttonActivitySuggestions";
 
 const locales = {
   sv: sv,
@@ -15,25 +15,29 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales,
 });
-// 🔁 Render calendar UI with events and calendar ref
-function renderCalendarUI(events: any[]) {
+// Render calendar UI with events
+function renderCalendarUI(events: any[], onDayClick: (slotInfo: {start:Date}) => void) {
   return (
-    // 📌 Attach the calendarRef to the container to enable scroll on mount
     <div
       className="mx-auto bg-white rounded-lg h-[105vh]"
     >
-      <AddEventButton />
+      <div className="flex gap-4 mb-4 justify-end">
+        <ActivitySuggestionsButton />
+      </div>
       <BigCalendar
         localizer={localizer}
         events={events}
         showAllEvents
         startAccessor="start"
         endAccessor="end"
+        selectable
+        onSelectSlot={onDayClick}
         defaultView="month"
         views={["month"]}
         style={{
           height: "43em",
           fontSize: "14px",
+          marginTop: "-30px"
         }}
         eventPropGetter={(event) => ({
           className: "event-item",

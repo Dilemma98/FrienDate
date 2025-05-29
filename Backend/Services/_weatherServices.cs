@@ -58,7 +58,7 @@ public class WeatherService
                 weatherData.Category = weatherMain switch
                 {
                     "clear" => "soligt ☀️",
-                    "clouds" => "målnigt ☁️",
+                    "clouds" => "molnigt ☁️",
                     "rain" => "regnigt ☔",
                     "drizzle" => "regnigt ☔",
                     "thunderstorm" => "regnigt ☔",
