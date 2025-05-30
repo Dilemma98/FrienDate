@@ -3,6 +3,8 @@
 body{
     background-color: #f9f6f7b8;
     background-image: url("../src/images/gray-floral.png");
+    background-attachment: fixed;
+
 }
 
 .rbc-day-bg {

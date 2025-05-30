@@ -19,7 +19,7 @@ const localizer = dateFnsLocalizer({
 function renderCalendarUI(events: any[], onDayClick: (slotInfo: {start:Date}) => void) {
   return (
     <div
-      className="mx-auto bg-white rounded-lg h-[105vh]"
+      className="mx-auto rounded-lg h-[105vh]"
     >
       <div className="flex gap-4 mb-4 justify-end">
         <ActivitySuggestionsButton />
